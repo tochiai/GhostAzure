@@ -3,13 +3,21 @@ define("ghost/app",
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __exports__) {
     "use strict";
     var Resolver = __dependency1__["default"];
+
     var initFixtures = __dependency2__["default"];
+
     var injectCurrentUser = __dependency3__["default"];
+
     var injectCsrf = __dependency4__["default"];
+
     var registerNotifications = __dependency5__.registerNotifications;
     var injectNotifications = __dependency5__.injectNotifications;
+
     var registerTrailingLocationHistory = __dependency6__["default"];
 
+
+
+    
     var App = Ember.Application.extend({
         /**
          * These are debugging flags, they are useful during development
@@ -22,15 +30,15 @@ define("ghost/app",
         modulePrefix: 'ghost',
         Resolver: Resolver['default']
     });
-
+    
     initFixtures();
-
+    
     App.initializer(injectCurrentUser);
     App.initializer(injectCsrf);
     App.initializer(registerNotifications);
     App.initializer(injectNotifications);
     App.initializer(registerTrailingLocationHistory);
-
+    
     __exports__["default"] = App;
   });
 define("ghost/assets/vendor/loader", 
@@ -38,28 +46,28 @@ define("ghost/assets/vendor/loader",
   function() {
     "use strict";
     var define, requireModule, require, requirejs;
-
+    
     (function() {
       var registry = {}, seen = {}, state = {};
       var FAILED = false;
-
+    
       define = function(name, deps, callback) {
         registry[name] = {
           deps: deps,
           callback: callback
         };
       };
-
+    
       requirejs = require = requireModule = function(name) {
         if (state[name] !== FAILED &&
             seen.hasOwnProperty(name)) {
           return seen[name];
         }
-
+    
         if (!registry.hasOwnProperty(name)) {
           throw new Error('Could not find module ' + name);
         }
-
+    
         var mod = registry[name];
         var deps = mod.deps;
         var callback = mod.callback;
@@ -67,9 +75,9 @@ define("ghost/assets/vendor/loader",
         var exports;
         var value;
         var loaded = false;
-
+    
         seen[name] = { }; // enable run-time cycles
-
+    
         try {
           for (var i=0, l=deps.length; i<l; i++) {
             if (deps[i] === 'exports') {
@@ -78,7 +86,7 @@ define("ghost/assets/vendor/loader",
               reified.push(requireModule(resolve(deps[i], name)));
             }
           }
-
+    
           value = callback.apply(this, reified);
           loaded = true;
         } finally {
@@ -88,24 +96,24 @@ define("ghost/assets/vendor/loader",
         }
         return seen[name] = exports || value;
       };
-
+    
       function resolve(child, name) {
         if (child.charAt(0) !== '.') { return child; }
-
+    
         var parts = child.split('/');
         var parentBase = name.split('/').slice(0, -1);
-
+    
         for (var i = 0, l = parts.length; i < l; i++) {
           var part = parts[i];
-
+    
           if (part === '..') { parentBase.pop(); }
           else if (part === '.') { continue; }
           else { parentBase.push(part); }
         }
-
+    
         return parentBase.join('/');
       }
-
+    
       requirejs._eak_seen = registry;
       requirejs.clear = function(){
         requirejs._eak_seen = registry = {};
@@ -118,22 +126,22 @@ define("ghost/components/-codemirror",
   function(__exports__) {
     "use strict";
     /* global CodeMirror*/
-
+    
     var onChangeHandler = function (cm) {
         cm.component.set('value', cm.getDoc().getValue());
     };
-
+    
     var onScrollHandler = function (cm) {
         var scrollInfo = cm.getScrollInfo(),
             percentage = scrollInfo.top / scrollInfo.height,
             component = cm.component;
-
+    
         // throttle scroll updates
         component.throttle = Ember.run.throttle(component, function () {
             this.set('scrollPosition', percentage);
         }, 50);
     };
-
+    
     var Codemirror = Ember.TextArea.extend({
         initCodemirror: function () {
             // create codemirror
@@ -141,25 +149,25 @@ define("ghost/components/-codemirror",
                 lineWrapping: true
             });
             this.codemirror.component = this; // save reference to this
-
+    
             // propagate changes to value property
             this.codemirror.on('change', onChangeHandler);
-
+    
             // on scroll update scrollPosition property
             this.codemirror.on('scroll', onScrollHandler);
         }.on('didInsertElement'),
-
+    
         removeThrottle: function () {
             Ember.run.cancel(this.throttle);
         }.on('willDestroyElement'),
-
+    
         removeCodemirrorHandlers: function () {
             // not sure if this is needed.
             this.codemirror.off('change', onChangeHandler);
             this.codemirror.off('scroll', onScrollHandler);
         }.on('willDestroyElement')
     });
-
+    
     __exports__["default"] = Codemirror;
   });
 define("ghost/components/-markdown", 
@@ -171,11 +179,11 @@ define("ghost/components/-markdown",
             var scrollWrapper = this.$('.entry-preview-content').get(0),
             // calculate absolute scroll position from percentage
                 scrollPixel = scrollWrapper.scrollHeight * this.get('scrollPosition');
-
+    
             scrollWrapper.scrollTop = scrollPixel; // adjust scroll position
         }.observes('scrollPosition')
     });
-
+    
     __exports__["default"] = Markdown;
   });
 define("ghost/components/activating-list-item", 
@@ -203,7 +211,7 @@ define("ghost/components/blur-text-field",
             this.sendAction('action', this.get('value'));
         }
     });
-
+    
     __exports__["default"] = BlurTextField;
   });
 define("ghost/components/file-upload", 
@@ -225,13 +233,13 @@ define("ghost/components/file-upload",
                 if (!this.uploadButtonDisabled && self._file) {
                     self.sendAction('onUpload', self._file);
                 }
-
+    
                 // Prevent double post by disabling the button.
                 this.set('uploadButtonDisabled', true);
             }
         }
     });
-
+    
     __exports__["default"] = FileUpload;
   });
 define("ghost/components/gh-form", 
@@ -258,16 +266,16 @@ define("ghost/components/ghost-notification",
     "use strict";
     var NotificationComponent = Ember.Component.extend({
         classNames: ['js-bb-notification'],
-
+    
         didInsertElement: function () {
             var self = this;
-
+    
             self.$().on('animationend webkitAnimationEnd oanimationend MSAnimationEnd', function (event) {
                 /* jshint unused: false */
                 self.notifications.removeObject(self.get('message'));
             });
         },
-
+    
         actions: {
             closeNotification: function () {
                 var self = this;
@@ -275,7 +283,7 @@ define("ghost/components/ghost-notification",
             }
         }
     });
-
+    
     __exports__["default"] = NotificationComponent;
   });
 define("ghost/components/ghost-notifications", 
@@ -287,20 +295,20 @@ define("ghost/components/ghost-notifications",
         classNames: 'notifications',
         messages: Ember.computed.alias('notifications')
     });
-
+    
     __exports__["default"] = NotificationsComponent;
   });
 define("ghost/components/ghost-popover", 
   ["exports"],
   function(__exports__) {
     "use strict";
-
+    
     var GhostPopover = Ember.Component.extend({
         classNames: 'ghost-popover',
         classNameBindings: ['open'],
         open: false
     });
-
+    
     __exports__["default"] = GhostPopover;
   });
 define("ghost/components/modal-dialog", 
@@ -310,23 +318,23 @@ define("ghost/components/modal-dialog",
     var ModalDialog = Ember.Component.extend({
         didInsertElement: function () {
             this.$('#modal-container').fadeIn(50);
-
+    
             this.$('.modal-background').show().fadeIn(10, function () {
                 $(this).addClass('in');
             });
-
+    
             this.$('.js-modal').addClass('in');
         },
-
+    
         willDestroyElement: function () {
-
+    
             this.$('.js-modal').removeClass('in');
-
+    
             this.$('.modal-background').removeClass('in');
-
+    
             return this._super();
         },
-
+    
         actions: {
             closeModal: function () {
                 this.sendAction();
@@ -339,32 +347,32 @@ define("ghost/components/modal-dialog",
                 this.sendAction();
             }
         },
-
+    
         klass: function () {
             var classNames = [];
-
+    
             classNames.push(this.get('type') ? 'modal-' + this.get('type') : 'modal');
-
+    
             if (this.get('style')) {
                 this.get('style').split(',').forEach(function (style) {
                     classNames.push('modal-style-' + style);
                 });
             }
-
+    
             classNames.push(this.get('animation'));
-
+    
             return classNames.join(' ');
         }.property('type', 'style', 'animation'),
-
+    
         acceptButtonClass: function () {
             return this.get('confirm.accept.buttonClass') ? this.get('confirm.accept.buttonClass') : 'button-add';
         }.property('confirm.accept.buttonClass'),
-
+    
         rejectButtonClass: function () {
             return this.get('confirm.reject.buttonClass') ? this.get('confirm.reject.buttonClass') : 'button-delete';
         }.property('confirm.reject.buttonClass')
     });
-
+    
     __exports__["default"] = ModalDialog;
   });
 define("ghost/components/upload-modal", 
@@ -372,21 +380,22 @@ define("ghost/components/upload-modal",
   function(__dependency1__, __exports__) {
     "use strict";
     /*global console */
-
+    
     var ModalDialog = __dependency1__["default"];
 
+    
     var UploadModal = ModalDialog.extend({
         layoutName: 'components/modal-dialog',
-
+    
         didInsertElement: function () {
             this._super();
-
+    
             // @TODO: get this real
             console.log('UploadController:afterRender');
             // var filestorage = $('#' + this.options.model.id).data('filestorage');
             // this.$('.js-drop-zone').upload({fileStorage: filestorage});
         },
-
+    
         actions: {
             closeModal: function () {
                 this.sendAction();
@@ -399,9 +408,9 @@ define("ghost/components/upload-modal",
                 this.sendAction();
             }
         },
-
+    
     });
-
+    
     __exports__["default"] = UploadModal;
   });
 define("ghost/controllers/application", 
@@ -410,14 +419,14 @@ define("ghost/controllers/application",
     "use strict";
     var ApplicationController = Ember.Controller.extend({
         isSignedIn: Ember.computed.bool('user.isSignedIn'),
-
+    
         actions: {
             toggleMenu: function () {
                 this.toggleProperty('showMenu');
             }
         }
     });
-
+    
     __exports__["default"] = ApplicationController;
   });
 define("ghost/controllers/debug", 
@@ -425,7 +434,7 @@ define("ghost/controllers/debug",
   function(__exports__) {
     "use strict";
     /*global alert, console */
-
+    
     var Debug = Ember.Controller.extend(Ember.Evented, {
         uploadButtonText: 'Import',
         actions: {
@@ -459,7 +468,7 @@ define("ghost/controllers/debug",
             }
         }
     });
-
+    
     __exports__["default"] = Debug;
   });
 define("ghost/controllers/forgotten", 
@@ -493,7 +502,7 @@ define("ghost/controllers/modals/delete-all",
   function(__exports__) {
     "use strict";
     /*global alert */
-
+    
     var DeleteAllController = Ember.Controller.extend({
         confirm: {
             accept: {
@@ -513,13 +522,13 @@ define("ghost/controllers/modals/delete-all",
                     //         if (!response.message) {
                     //             throw new Error(response.detail || 'Unknown error');
                     //         }
-
+    
                     //         Ghost.notifications.addItem({
                     //             type: 'success',
                     //             message: response.message,
                     //             status: 'passive'
                     //         });
-
+    
                     //     },
                     //     error: function onError(response) {
                     //         var responseText = JSON.parse(response.responseText),
@@ -529,7 +538,7 @@ define("ghost/controllers/modals/delete-all",
                     //             message: ['A problem was encountered while deleting content from your blog. Error: ', message].join(''),
                     //             status: 'passive'
                     //         });
-
+    
                     //     }
                     // });
                 },
@@ -545,7 +554,7 @@ define("ghost/controllers/modals/delete-all",
             }
         }
     });
-
+    
     __exports__["default"] = DeleteAllController;
   });
 define("ghost/controllers/modals/delete-post", 
@@ -553,7 +562,7 @@ define("ghost/controllers/modals/delete-post",
   function(__exports__) {
     "use strict";
     /*global alert */
-
+    
     var DeletePostController = Ember.Controller.extend({
         confirm: {
             accept: {
@@ -592,14 +601,14 @@ define("ghost/controllers/modals/delete-post",
             }
         },
     });
-
+    
     __exports__["default"] = DeletePostController;
   });
 define("ghost/controllers/modals/upload", 
   ["exports"],
   function(__exports__) {
     "use strict";
-
+    
     var UploadController = Ember.Controller.extend({
         confirm: {
             reject: {
@@ -611,7 +620,7 @@ define("ghost/controllers/modals/upload",
             }
         }
     });
-
+    
     __exports__["default"] = UploadController;
   });
 define("ghost/controllers/posts/post", 
@@ -621,10 +630,11 @@ define("ghost/controllers/posts/post",
     var parseDateString = __dependency1__.parseDateString;
     var formatDate = __dependency1__.formatDate;
 
+    
     var equal = Ember.computed.equal;
-
+    
     var PostController = Ember.ObjectController.extend({
-
+    
         isPublished: equal('status', 'published'),
         isDraft: equal('status', 'draft'),
         isEditingSettings: false,
@@ -637,11 +647,11 @@ define("ghost/controllers/posts/post",
             }
             return !!this.get('model.page');
         }.property('model.page'),
-
+    
         isOnServer: function () {
             return this.get('model.id') !== undefined;
         }.property('model.id'),
-
+    
         newSlugBinding: Ember.Binding.oneWay('model.slug'),
         slugPlaceholder: null,
         // Requests a new slug when the title was changed
@@ -649,7 +659,7 @@ define("ghost/controllers/posts/post",
             var model,
                 self = this,
                 title = this.get('title');
-
+    
             // If there's a title present we want to
             // validate it against existing slugs in the db
             // and then update the placeholder value.
@@ -667,7 +677,7 @@ define("ghost/controllers/posts/post",
                 self.set('slugPlaceholder', '');
             }
         }.observes('model.title'),
-
+    
         publishedAt: null,
         publishedAtChanged: function () {
             this.set('publishedAt', formatDate(this.get('model.published_at')));
@@ -704,10 +714,10 @@ define("ghost/controllers/posts/post",
                     this.set('newSlug', slug);
                     return;
                 }
-
+    
                 //Validation complete
                 this.set('model.slug', newSlug);
-
+    
                 // If the model doesn't currently
                 // exist on the server
                 // then just update the model's value
@@ -719,29 +729,29 @@ define("ghost/controllers/posts/post",
                     self.notifications.showSuccess('Permalink successfully changed to <strong>' + this.get('model.slug') + '</strong>.');
                 }, this.notifications.showErrors);
             },
-
+    
             updatePublishedAt: function (userInput) {
                 var errMessage = '',
                     newPubDate = formatDate(parseDateString(userInput)),
                     pubDate = this.get('publishedAt'),
                     newPubDateMoment,
                     pubDateMoment;
-
+    
                 // if there is no new pub date, mark that until the post is published,
                 //    when we'll fill in with the current time.
                 if (!newPubDate) {
                     this.set('publishedAt', '');
                     return;
                 }
-
+    
                 // Check for missing time stamp on new data
                 // If no time specified, add a 12:00
                 if (newPubDate && !newPubDate.slice(-5).match(/\d+:\d\d/)) {
                     newPubDate += " 12:00";
                 }
-
+    
                 newPubDateMoment = parseDateString(newPubDate);
-
+    
                 // If there was a published date already set
                 if (pubDate) {
                     // Check for missing time stamp on current model
@@ -749,24 +759,24 @@ define("ghost/controllers/posts/post",
                     if (!pubDate.slice(-5).match(/\d+:\d\d/)) {
                         pubDate += " 12:00";
                     }
-
+    
                     pubDateMoment = parseDateString(pubDate);
-
+    
                     // Quit if the new date is the same
                     if (pubDateMoment.isSame(newPubDateMoment)) {
                         return;
                     }
                 }
-
+    
                 // Validate new Published date
                 if (!newPubDateMoment.isValid() || newPubDate.substr(0, 12) === "Invalid date") {
                     errMessage = 'Published Date must be a valid date with format: DD MMM YY @ HH:mm (e.g. 6 Dec 14 @ 15:00)';
                 }
-
+    
                 if (newPubDateMoment.diff(new Date(), 'h') > 0) {
                     errMessage = 'Published Date cannot currently be in the future.';
                 }
-
+    
                 if (errMessage) {
                     // Show error message
                     this.notifications.showError(errMessage);
@@ -776,10 +786,10 @@ define("ghost/controllers/posts/post",
                     this.notifyPropertyChange('publishedAt');
                     return;
                 }
-
+    
                 //Validation complete
                 this.set('model.published_at', newPubDateMoment.toDate());
-
+    
                 // If the model doesn't currently
                 // exist on the server
                 // then just update the model's value
@@ -793,7 +803,7 @@ define("ghost/controllers/posts/post",
             }
         }
     });
-
+    
     __exports__["default"] = PostController;
   });
 define("ghost/controllers/reset", 
@@ -835,41 +845,41 @@ define("ghost/controllers/settings/general",
   ["exports"],
   function(__exports__) {
     "use strict";
-
+    
     var elementLookup = {
         title: '#blog-title',
         description: '#blog-description',
         email: '#email-address',
         postsPerPage: '#postsPerPage'
     };
-
+    
     var SettingsGeneralController = Ember.ObjectController.extend({
         isDatedPermalinks: function (key, value) {
             // setter
             if (arguments.length > 1) {
                 this.set('permalinks', value ? '/:year/:month/:day/:slug/' : '/:slug/');
             }
-
+    
             // getter
             var slugForm = this.get('permalinks');
-
+    
             return slugForm !== '/:slug/';
         }.property('permalinks'),
-
+    
         actions: {
             'save': function () {
                 // Validate and save settings
                 var model = this.get('model'),
                     // @TODO: Don't know how to scope this to this controllers view because this.view is null
                     errs = model.validate();
-
+    
                 if (errs.length > 0) {
                     // Set the actual element from this view based on the error
                     errs.forEach(function (err) {
                         // @TODO: Probably should still be scoped to this controllers root element.
                         err.el = $(elementLookup[err.el]);
                     });
-
+    
                     // Let the applicationRoute handle validation errors
                     this.send('handleValidationErrors', errs);
                 } else {
@@ -882,17 +892,17 @@ define("ghost/controllers/settings/general",
                     });
                 }
             },
-
+    
             'uploadLogo': function () {
                 // @TODO: Integrate with Modal component
             },
-
+    
             'uploadCover': function () {
                 // @TODO: Integrate with Modal component
             }
         }
     });
-
+    
     __exports__["default"] = SettingsGeneralController;
   });
 define("ghost/controllers/settings/user", 
@@ -900,26 +910,26 @@ define("ghost/controllers/settings/user",
   function(__exports__) {
     "use strict";
     /*global alert */
-
+    
     var SettingsUserController = Ember.Controller.extend({
         cover: function () {
             // @TODO: add {{asset}} subdir path
             return this.user.getWithDefault('cover', '/shared/img/user-cover.png');
         }.property('user.cover'),
-
+    
         coverTitle: function () {
             return this.get('user.name') + '\'s Cover Image';
         }.property('user.name'),
-
+    
         image: function () {
             // @TODO: add {{asset}} subdir path
             return 'background-image: url(' + this.user.getWithDefault('image', '/shared/img/user-image.png') + ')';
         }.property('user.image'),
-
+    
         actions: {
             save: function () {
                 alert('@TODO: Saving user...');
-
+    
                 if (this.user.validate().get('isValid')) {
                     this.user.save().then(function (response) {
                         alert('Done saving' + JSON.stringify(response));
@@ -930,11 +940,11 @@ define("ghost/controllers/settings/user",
                     alert('Errors found! ' + JSON.stringify(this.user.get('errors')));
                 }
             },
-
+    
             password: function () {
                 alert('@TODO: Changing password...');
                 var passwordProperties = this.getProperties('password', 'newPassword', 'ne2Password');
-
+    
                 if (this.user.validatePassword(passwordProperties).get('passwordIsValid')) {
                     this.user.saveNewPassword(passwordProperties).then(function () {
                         alert('Success!');
@@ -952,9 +962,9 @@ define("ghost/controllers/settings/user",
                 }
             }
         }
-
+    
     });
-
+    
     __exports__["default"] = SettingsUserController;
   });
 define("ghost/fixtures/init", 
@@ -962,28 +972,31 @@ define("ghost/fixtures/init",
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     var postFixtures = __dependency1__["default"];
+
     var userFixtures = __dependency2__["default"];
+
     var settingsFixtures = __dependency3__["default"];
 
+    
     var response = function (responseBody, status) {
         status = status || 200;
         var textStatus = (status === 200) ? 'success' : 'error';
-
+    
         return {
             response: responseBody,
             jqXHR: { status: status },
             textStatus: textStatus
         };
     };
-
+    
     var user = function (status) {
         return response(userFixtures.findBy('id', 1), status);
     };
-
+    
     var post = function (id, status) {
         return response(postFixtures.findBy('id', id), status);
     };
-
+    
     var posts = function (status) {
         return response({
             'posts': postFixtures,
@@ -993,11 +1006,11 @@ define("ghost/fixtures/init",
             'total': 2
         }, status);
     };
-
+    
     var settings = function (status) {
         return response(settingsFixtures, status);
     };
-
+    
     var defineFixtures = function (status) {
         ic.ajax.defineFixture('/ghost/api/v0.1/posts', posts(status));
         ic.ajax.defineFixture('/ghost/api/v0.1/posts/1', post(1, status));
@@ -1005,7 +1018,7 @@ define("ghost/fixtures/init",
         ic.ajax.defineFixture('/ghost/api/v0.1/posts/3', post(3, status));
         ic.ajax.defineFixture('/ghost/api/v0.1/posts/4', post(4, status));
         ic.ajax.defineFixture('/ghost/api/v0.1/posts/slug/test%20title/', response('generated-slug', status));
-
+    
         ic.ajax.defineFixture('/ghost/api/v0.1/users/me/', user(status));
         ic.ajax.defineFixture('/ghost/changepw/', response({
             msg: 'Password changed successfully'
@@ -1018,7 +1031,7 @@ define("ghost/fixtures/init",
         }));
         ic.ajax.defineFixture('/ghost/api/v0.1/settings/?type=blog,theme,app', settings(status));
     };
-
+    
     __exports__["default"] = defineFixtures;
   });
 define("ghost/fixtures/posts", 
@@ -5738,7 +5751,7 @@ define("ghost/fixtures/posts",
             ]
         }
     ];
-
+    
     __exports__["default"] = posts;
   });
 define("ghost/fixtures/settings", 
@@ -5767,7 +5780,7 @@ define("ghost/fixtures/settings",
         ],
         "availableApps": []
     };
-
+    
     __exports__["default"] = settings;
   });
 define("ghost/fixtures/users", 
@@ -5795,7 +5808,7 @@ define("ghost/fixtures/users",
             "updated_at": "2014-03-11T14:06:43.000Z"
         }
     ];
-
+    
     __exports__["default"] = users;
   });
 define("ghost/helpers/count-words", 
@@ -5804,10 +5817,11 @@ define("ghost/helpers/count-words",
     "use strict";
     var count = __dependency1__["default"];
 
+    
     var countWords = Ember.Handlebars.makeBoundHelper(function (markdown) {
         return count(markdown || '');
     });
-
+    
     __exports__["default"] = countWords;
   });
 define("ghost/helpers/format-markdown", 
@@ -5816,11 +5830,11 @@ define("ghost/helpers/format-markdown",
     "use strict";
     /* global Showdown, Handlebars */
     var showdown = new Showdown.converter();
-
+    
     var formatMarkdown = Ember.Handlebars.makeBoundHelper(function (markdown) {
         return new Handlebars.SafeString(showdown.makeHtml(markdown || ''));
     });
-
+    
     __exports__["default"] = formatMarkdown;
   });
 define("ghost/helpers/format-timeago", 
@@ -5834,7 +5848,7 @@ define("ghost/helpers/format-timeago",
         // For large numbers moment sucks => single Ember.Object based clock better
         // https://github.com/manuelmitasch/ghost-admin-ember-demo/commit/fba3ab0a59238290c85d4fa0d7c6ed1be2a8a82e#commitcomment-5396524
     });
-
+    
     __exports__["default"] = formatTimeago;
   });
 define("ghost/initializers/csrf", 
@@ -5843,10 +5857,10 @@ define("ghost/initializers/csrf",
     "use strict";
     __exports__["default"] = {
         name: 'csrf',
-
+    
         initialize: function (container) {
             container.register('csrf:current', $('meta[name="csrf-param"]').attr('content'), { instantiate: false });
-
+    
             container.injection('route', 'csrf', 'csrf:current');
             container.injection('controller', 'csrf', 'csrf:current');
         }
@@ -5858,14 +5872,15 @@ define("ghost/initializers/current-user",
     "use strict";
     var User = __dependency1__["default"];
 
+    
     __exports__["default"] = {
         name: 'currentUser',
-
+    
         initialize: function (container, application) {
             var user = User.create(application.get('user') || {});
-
+    
             container.register('user:current', user, { instantiate: false });
-
+    
             container.injection('route', 'user', 'user:current');
             container.injection('controller', 'user', 'user:current');
         }
@@ -5877,24 +5892,25 @@ define("ghost/initializers/notifications",
     "use strict";
     var Notifications = __dependency1__["default"];
 
+    
     var registerNotifications = {
         name: 'registerNotifications',
-
+    
         initialize: function (container, application) {
             application.register('notifications:main', Notifications);
         }
     };
-
+    
     var injectNotifications = {
         name: 'injectNotifications',
-
+    
         initialize: function (container, application) {
             application.inject('controller', 'notifications', 'notifications:main');
             application.inject('component', 'notifications', 'notifications:main');
             application.inject('route', 'notifications', 'notifications:main');
         }
     };
-
+    
     __exports__.registerNotifications = registerNotifications;
     __exports__.injectNotifications = injectNotifications;
   });
@@ -5903,27 +5919,27 @@ define("ghost/initializers/trailing-history",
   function(__exports__) {
     "use strict";
     /*global Ember */
-
+    
     var trailingHistory = Ember.HistoryLocation.extend({
         setURL: function (path) {
             var state = this.getState();
             path = this.formatURL(path);
             path = path.replace(/\/?$/, '/');
-
+    
             if (state && state.path !== path) {
                 this.pushState(path);
             }
         }
     });
-
+    
     var registerTrailingLocationHistory = {
         name: 'registerTrailingLocationHistory',
-
+    
         initialize: function (container, application) {
             application.register('location:trailing-history', trailingHistory);
         }
     };
-
+    
     __exports__["default"] = registerTrailingLocationHistory;
   });
 define("ghost/mixins/style-body", 
@@ -5931,11 +5947,11 @@ define("ghost/mixins/style-body",
   function(__exports__) {
     "use strict";
     // mixin used for routes that need to set a css className on the body tag
-
+    
     var styleBody = Ember.Mixin.create({
         activate: function () {
             var cssClasses = this.get('classNames');
-
+    
             if (cssClasses) {
                 Ember.run.schedule('afterRender', null, function () {
                     cssClasses.forEach(function (curClass) {
@@ -5944,10 +5960,10 @@ define("ghost/mixins/style-body",
                 });
             }
         },
-
+    
         deactivate: function () {
             var cssClasses = this.get('classNames');
-
+    
             Ember.run.schedule('afterRender', null, function () {
                 cssClasses.forEach(function (curClass) {
                     Ember.$('body').removeClass(curClass);
@@ -5955,33 +5971,33 @@ define("ghost/mixins/style-body",
             });
         }
     });
-
+    
     __exports__["default"] = styleBody;
   });
 define("ghost/models/base", 
   ["exports"],
   function(__exports__) {
     "use strict";
-
+    
     function ghostPaths() {
         var path = window.location.pathname,
             subdir = path.substr(0, path.search('/ghost/'));
-
+    
         return {
             subdir: subdir,
             adminRoot: subdir + '/ghost',
             apiRoot: subdir + '/ghost/api/v0.1'
         };
     }
-
+    
     var BaseModel = Ember.Object.extend({
-
+    
         fetch: function () {
             return ic.ajax.request(this.url, {
                 type: 'GET'
             });
         },
-
+    
         save: function () {
             return ic.ajax.request(this.url, {
                 type: 'PUT',
@@ -5991,11 +6007,11 @@ define("ghost/models/base",
             });
         }
     });
-
+    
     BaseModel.apiRoot = ghostPaths().apiRoot;
     BaseModel.subdir = ghostPaths().subdir;
     BaseModel.adminRoot = ghostPaths().adminRoot;
-
+    
     __exports__["default"] = BaseModel;
   });
 define("ghost/models/post", 
@@ -6004,9 +6020,10 @@ define("ghost/models/post",
     "use strict";
     var BaseModel = __dependency1__["default"];
 
+    
     var PostModel = BaseModel.extend({
         url: BaseModel.apiRoot + '/posts/',
-
+    
         generateSlug: function () {
             // @TODO Make this request use this.get('title') once we're an actual user
             var url = this.get('url') + 'slug/' + encodeURIComponent('test title') + '/';
@@ -6014,19 +6031,19 @@ define("ghost/models/post",
                 type: 'GET'
             });
         },
-
+    
         save: function (properties) {
             var url = this.url,
                 self = this,
                 type,
                 validationErrors = this.validate();
-
+    
             if (validationErrors.length) {
                 return Ember.RSVP.Promise(function (resolve, reject) {
                     return reject(validationErrors);
                 });
             }
-
+    
             //If specific properties are being saved,
             //this is an edit. Otherwise, it's an add.
             if (properties && properties.length > 0) {
@@ -6036,7 +6053,7 @@ define("ghost/models/post",
                 type = 'POST';
                 properties = Ember.keys(this);
             }
-
+    
             return ic.ajax.request(url, {
                 type: type,
                 data: this.getProperties(properties)
@@ -6046,17 +6063,17 @@ define("ghost/models/post",
         },
         validate: function () {
             var validationErrors = [];
-
+    
             if (!(this.get('title') && this.get('title').length)) {
                 validationErrors.push({
                     message: "You must specify a title for the post."
                 });
             }
-
+    
             return validationErrors;
         }
     });
-
+    
     __exports__["default"] = PostModel;
   });
 define("ghost/models/settings", 
@@ -6064,12 +6081,13 @@ define("ghost/models/settings",
   function(__dependency1__, __exports__) {
     "use strict";
     var validator = window.validator;
-
+    
     var BaseModel = __dependency1__["default"];
 
+    
     var SettingsModel = BaseModel.extend({
         url: BaseModel.apiRoot + '/settings/?type=blog,theme,app',
-
+    
         title: null,
         description: null,
         email: null,
@@ -6084,32 +6102,32 @@ define("ghost/models/settings",
         installedApps: null,
         availableThemes: null,
         availableApps: null,
-
+    
         validate: function () {
             var validationErrors = [],
                 postsPerPage;
-
+    
             if (!validator.isLength(this.get('title'), 0, 150)) {
                 validationErrors.push({message: "Title is too long", el: 'title'});
             }
-
+    
             if (!validator.isLength(this.get('description'), 0, 200)) {
                 validationErrors.push({message: "Description is too long", el: 'description'});
             }
-
+    
             if (!validator.isEmail(this.get('email')) || !validator.isLength(this.get('email'), 0, 254)) {
                 validationErrors.push({message: "Please supply a valid email address", el: 'email'});
             }
-
+    
             postsPerPage = this.get('postsPerPage');
             if (!validator.isInt(postsPerPage) || postsPerPage > 1000) {
                 validationErrors.push({message: "Please use a number less than 1000", el: 'postsPerPage'});
             }
-
+    
             if (!validator.isInt(postsPerPage) || postsPerPage < 0) {
                 validationErrors.push({message: "Please use a number greater than 0", el: 'postsPerPage'});
             }
-
+    
             return validationErrors;
         },
         exportPath: BaseModel.adminRoot + '/export/',
@@ -6137,7 +6155,7 @@ define("ghost/models/settings",
             });
         }
     });
-
+    
     __exports__["default"] = SettingsModel;
   });
 define("ghost/models/user", 
@@ -6146,90 +6164,91 @@ define("ghost/models/user",
     "use strict";
     var BaseModel = __dependency1__["default"];
 
+    
     var UserModel = BaseModel.extend({
         id: null,
         name: null,
         image: null,
-
+    
         isSignedIn: Ember.computed.bool('id'),
-
+    
         url: BaseModel.apiRoot + '/users/me/',
         forgottenUrl: BaseModel.apiRoot + '/forgotten/',
         resetUrl: BaseModel.apiRoot + '/reset/',
-
+    
         save: function () {
             return ic.ajax.request(this.url, {
                 type: 'POST',
                 data: this.getProperties(Ember.keys(this))
             });
         },
-
+    
         validate: function () {
             var validationErrors = [];
-
+    
             if (!validator.isLength(this.get('name'), 0, 150)) {
                 validationErrors.push({message: "Name is too long"});
             }
-
+    
             if (!validator.isLength(this.get('bio'), 0, 200)) {
                 validationErrors.push({message: "Bio is too long"});
             }
-
+    
             if (!validator.isEmail(this.get('email'))) {
                 validationErrors.push({message: "Please supply a valid email address"});
             }
-
+    
             if (!validator.isLength(this.get('location'), 0, 150)) {
                 validationErrors.push({message: "Location is too long"});
             }
-
+    
             if (this.get('website').length) {
                 if (!validator.isURL(this.get('website'), { protocols: ['http', 'https'], require_protocol: true }) ||
                     !validator.isLength(this.get('website'), 0, 2000)) {
                     validationErrors.push({message: "Please use a valid url"});
                 }
             }
-
+    
             if (validationErrors.length > 0) {
                 this.set('isValid', false);
             } else {
                 this.set('isValid', true);
             }
-
+    
             this.set('errors', validationErrors);
-
+    
             return this;
         },
-
+    
         saveNewPassword: function (password) {
             return ic.ajax.request(BaseModel.subdir + '/ghost/changepw/', {
                 type: 'POST',
                 data: password
             });
         },
-
+    
         validatePassword: function (password) {
             var validationErrors = [];
-
+    
             if (!validator.equals(password.newPassword, password.ne2Password)) {
                 validationErrors.push("Your new passwords do not match");
             }
-
+    
             if (!validator.isLength(password.newPassword, 8)) {
                 validationErrors.push("Your password is not long enough. It must be at least 8 characters long.");
             }
-
+    
             if (validationErrors.length > 0) {
                 this.set('passwordIsValid', false);
             } else {
                 this.set('passwordIsValid', true);
             }
-
+    
             this.set('passwordErrors', validationErrors);
-
+    
             return this;
         },
-
+    
         fetchForgottenPasswordFor: function (email) {
             var self = this;
             return new Ember.RSVP.Promise(function (resolve, reject) {
@@ -6249,7 +6268,7 @@ define("ghost/models/user",
                 }
             });
         },
-
+    
         resetPassword: function (passwords, token) {
             var self = this;
             return new Ember.RSVP.Promise(function (resolve, reject) {
@@ -6272,7 +6291,7 @@ define("ghost/models/user",
             });
         }
     });
-
+    
     __exports__["default"] = UserModel;
   });
 define("ghost/router", 
@@ -6280,15 +6299,15 @@ define("ghost/router",
   function(__exports__) {
     "use strict";
     /*global Ember */
-
+    
     // ensure we don't share routes between all Router instances
     var Router = Ember.Router.extend();
-
+    
     Router.reopen({
         location: 'trailing-history', // use HTML5 History API instead of hash-tag based URLs
         rootURL: '/ghost/ember/' // admin interface lives under sub-directory /ghost
     });
-
+    
     Router.map(function () {
         this.route('signin');
         this.route('signup');
@@ -6308,7 +6327,7 @@ define("ghost/router",
         //Redirect legacy content to posts
         this.route('content');
     });
-
+    
     __exports__["default"] = Router;
   });
 define("ghost/routes/application", 
@@ -6320,7 +6339,7 @@ define("ghost/routes/application",
             signedIn: function (user) {
                 this.container.lookup('user:current').setProperties(user);
             },
-
+    
             signedOut: function () {
                 this.container.lookup('user:current').setProperties({
                     id: null,
@@ -6328,7 +6347,7 @@ define("ghost/routes/application",
                     image: null
                 });
             },
-
+    
             openModal: function (modalName, model) {
                 modalName = 'modals/' + modalName;
                 // We don't always require a modal to have a controller
@@ -6341,19 +6360,19 @@ define("ghost/routes/application",
                     outlet: 'modal'
                 });
             },
-
+    
             closeModal: function () {
                 return this.disconnectOutlet({
                     outlet: 'modal',
                     parentView: 'application'
                 });
             },
-
+    
             handleErrors: function (errors) {
                 this.notifications.clear();
                 errors.forEach(function (errorObj) {
                     this.notifications.showError(errorObj.message || errorObj);
-
+    
                     if (errorObj.hasOwnProperty('el')) {
                         errorObj.el.addClass('input-error');
                     }
@@ -6361,7 +6380,7 @@ define("ghost/routes/application",
             }
         }
     });
-
+    
     __exports__["default"] = ApplicationRoute;
   });
 define("ghost/routes/authenticated", 
@@ -6372,11 +6391,11 @@ define("ghost/routes/authenticated",
         beforeModel: function () {
             if (!this.get('user.isSignedIn')) {
                 this.notifications.showError('Please sign in');
-
+    
                 this.transitionTo('signin');
             }
         },
-
+    
         actions: {
             error: function (error) {
                 if (error.jqXHR.status === 401) {
@@ -6385,7 +6404,7 @@ define("ghost/routes/authenticated",
             }
         }
     });
-
+    
     __exports__["default"] = AuthenticatedRoute;
   });
 define("ghost/routes/content", 
@@ -6397,7 +6416,7 @@ define("ghost/routes/content",
             this.transitionTo('posts');
         }
     });
-
+    
     __exports__["default"] = ContentRoute;
   });
 define("ghost/routes/debug", 
@@ -6405,17 +6424,19 @@ define("ghost/routes/debug",
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     var styleBody = __dependency1__["default"];
+
     var SettingsModel = __dependency2__["default"];
 
+    
     var settingsModel = SettingsModel.create();
-
+    
     var DebugRoute = Ember.Route.extend(styleBody, {
         classNames: ['settings'],
         model: function () {
             return settingsModel;
         }
     });
-
+    
     __exports__["default"] = DebugRoute;
   });
 define("ghost/routes/editor", 
@@ -6423,9 +6444,13 @@ define("ghost/routes/editor",
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     var ajax = __dependency1__["default"];
+
     var styleBody = __dependency2__["default"];
+
     var AuthenticatedRoute = __dependency3__["default"];
+
     var Post = __dependency4__["default"];
+
     var EditorRoute = AuthenticatedRoute.extend(styleBody, {
         classNames: ['editor'],
         controllerName: 'posts.post',
@@ -6435,7 +6460,7 @@ define("ghost/routes/editor",
             });
         }
     });
-
+    
     __exports__["default"] = EditorRoute;
   });
 define("ghost/routes/forgotten", 
@@ -6444,10 +6469,11 @@ define("ghost/routes/forgotten",
     "use strict";
     var styleBody = __dependency1__["default"];
 
+    
     var ForgottenRoute = Ember.Route.extend(styleBody, {
         classNames: ['ghost-forgotten']
     });
-
+    
     __exports__["default"] = ForgottenRoute;
   });
 define("ghost/routes/new", 
@@ -6455,16 +6481,18 @@ define("ghost/routes/new",
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     var styleBody = __dependency1__["default"];
+
     var AuthenticatedRoute = __dependency2__["default"];
 
+    
     var NewRoute = AuthenticatedRoute.extend(styleBody, {
         classNames: ['editor'],
-
+    
         renderTemplate: function () {
             this.render('editor');
         }
     });
-
+    
     __exports__["default"] = NewRoute;
   });
 define("ghost/routes/posts", 
@@ -6472,13 +6500,17 @@ define("ghost/routes/posts",
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __exports__) {
     "use strict";
     var ajax = __dependency1__["default"];
+
     var styleBody = __dependency2__["default"];
+
     var AuthenticatedRoute = __dependency3__["default"];
+
     var Post = __dependency4__["default"];
 
+    
     var PostsRoute = AuthenticatedRoute.extend(styleBody, {
         classNames: ['manage'],
-
+    
         model: function () {
             return ajax('/ghost/api/v0.1/posts').then(function (response) {
                 return response.posts.map(function (post) {
@@ -6486,14 +6518,14 @@ define("ghost/routes/posts",
                 });
             });
         },
-
+    
         actions: {
             openEditor: function (post) {
                 this.transitionTo('editor', post);
             }
         }
     });
-
+    
     __exports__["default"] = PostsRoute;
   });
 define("ghost/routes/posts/index", 
@@ -6504,13 +6536,13 @@ define("ghost/routes/posts/index",
         // redirect to first post subroute
         redirect: function () {
             var firstPost = (this.modelFor('posts') || []).get('firstObject');
-
+    
             if (firstPost) {
                 this.transitionTo('posts.post', firstPost);
             }
         }
     });
-
+    
     __exports__["default"] = PostsIndexRoute;
   });
 define("ghost/routes/posts/post", 
@@ -6519,6 +6551,7 @@ define("ghost/routes/posts/post",
     "use strict";
     /*global ajax */
     var Post = __dependency1__["default"];
+
     var PostsPostRoute = Ember.Route.extend({
         model: function (params) {
             return ajax('/ghost/api/v0.1/posts/' + params.post_id).then(function (post) {
@@ -6526,7 +6559,7 @@ define("ghost/routes/posts/post",
             });
         }
     });
-
+    
     __exports__["default"] = PostsPostRoute;
   });
 define("ghost/routes/reset", 
@@ -6535,13 +6568,14 @@ define("ghost/routes/reset",
     "use strict";
     var styleBody = __dependency1__["default"];
 
+    
     var ResetRoute = Ember.Route.extend(styleBody, {
         classNames: ['ghost-reset'],
         setupController: function (controller, params) {
             controller.token = params.token;
         }
     });
-
+    
     __exports__["default"] = ResetRoute;
   });
 define("ghost/routes/settings", 
@@ -6549,12 +6583,14 @@ define("ghost/routes/settings",
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     var styleBody = __dependency1__["default"];
+
     var AuthenticatedRoute = __dependency2__["default"];
 
+    
     var SettingsRoute = AuthenticatedRoute.extend(styleBody, {
         classNames: ['settings']
     });
-
+    
     __exports__["default"] = SettingsRoute;
   });
 define("ghost/routes/settings/general", 
@@ -6562,9 +6598,12 @@ define("ghost/routes/settings/general",
   function(__dependency1__, __dependency2__, __dependency3__, __exports__) {
     "use strict";
     var ajax = __dependency1__["default"];
+
     var AuthenticatedRoute = __dependency2__["default"];
+
     var SettingsModel = __dependency3__["default"];
 
+    
     var SettingsGeneralRoute = AuthenticatedRoute.extend({
         model: function () {
             return ajax('/ghost/api/v0.1/settings/?type=blog,theme,app').then(function (resp) {
@@ -6572,7 +6611,7 @@ define("ghost/routes/settings/general",
             });
         }
     });
-
+    
     __exports__["default"] = SettingsGeneralRoute;
   });
 define("ghost/routes/settings/index", 
@@ -6581,13 +6620,14 @@ define("ghost/routes/settings/index",
     "use strict";
     var AuthenticatedRoute = __dependency1__["default"];
 
+    
     var SettingsIndexRoute = AuthenticatedRoute.extend({
         // redirect to general tab
         redirect: function () {
             this.transitionTo('settings.general');
         }
     });
-
+    
     __exports__["default"] = SettingsIndexRoute;
   });
 define("ghost/routes/signin", 
@@ -6595,21 +6635,23 @@ define("ghost/routes/signin",
   function(__dependency1__, __dependency2__, __exports__) {
     "use strict";
     var ajax = __dependency1__["default"];
+
     var styleBody = __dependency2__["default"];
 
+    
     var isEmpty = Ember.isEmpty;
-
+    
     var SigninRoute = Ember.Route.extend(styleBody, {
         classNames: ['ghost-login'],
-
+    
         actions: {
             login: function () {
                 var self = this,
                     controller = this.get('controller'),
                     data = controller.getProperties('email', 'password');
-
+    
                 if (!isEmpty(data.email) && !isEmpty(data.password)) {
-
+    
                     ajax({
                         url: '/ghost/signin/',
                         type: 'POST',
@@ -6620,9 +6662,9 @@ define("ghost/routes/signin",
                     }).then(
                         function (response) {
                             self.send('signedIn', response.userData);
-
+    
                             self.notifications.clear();
-
+    
                             self.transitionTo('posts');
                         }, function (resp) {
                             // This path is ridiculous, should be a helper in notifications; e.g. notifications.showAPIError
@@ -6631,13 +6673,13 @@ define("ghost/routes/signin",
                     );
                 } else {
                     this.notifications.clear();
-
+    
                     this.notifications.showError('Must enter email + password');
                 }
             }
         }
     });
-
+    
     __exports__["default"] = SigninRoute;
   });
 define("ghost/routes/signup", 
@@ -6646,10 +6688,11 @@ define("ghost/routes/signup",
     "use strict";
     var styleBody = __dependency1__["default"];
 
+    
     var SignupRoute = Ember.Route.extend(styleBody, {
         classNames: ['ghost-signup']
     });
-
+    
     __exports__["default"] = SignupRoute;
   });
 define("ghost/tpl/hbs-tpl", 
@@ -6657,33 +6700,33 @@ define("ghost/tpl/hbs-tpl",
   function() {
     "use strict";
     this["JST"] = this["JST"] || {};
-
+    
     this["JST"]["forgotten"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "<form id=\"forgotten\" class=\"forgotten-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\n    </div>\n    <button class=\"button-save\" type=\"submit\">Send new password</button>\n</form>\n";
       });
-
+    
     this["JST"]["list-item"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this, functionType="function";
-
+    
     function program1(depth0,data) {
       
       
       return " featured";
       }
-
+    
     function program3(depth0,data) {
       
       
       return " page";
       }
-
+    
     function program5(depth0,data) {
       
       var buffer = "", stack1;
@@ -6698,7 +6741,7 @@ define("ghost/tpl/hbs-tpl",
       
       return "\n                    <span class=\"page\">Page</span>\n            ";
       }
-
+    
     function program8(depth0,data) {
       
       var buffer = "", stack1, options;
@@ -6715,13 +6758,13 @@ define("ghost/tpl/hbs-tpl",
         + "\n                </time>\n            ";
       return buffer;
       }
-
+    
     function program10(depth0,data) {
       
       
       return "\n            <span class=\"draft\">Draft</span>\n        ";
       }
-
+    
       buffer += "<a class=\"permalink";
       stack1 = helpers['if'].call(depth0, (depth0 && depth0.featured), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
       if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -6737,13 +6780,13 @@ define("ghost/tpl/hbs-tpl",
       buffer += "\n        </span>\n    </section>\n</a>\n";
       return buffer;
       });
-
+    
     this["JST"]["login"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
-
-
+    
+    
       buffer += "<form id=\"login\" class=\"login-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\">\n    </div>\n    <button class=\"button-save\" type=\"submit\">Log in</button>\n    <section class=\"meta\">\n        <a class=\"forgotten-password\" href=\"";
       if (stack1 = helpers.admin_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
       else { stack1 = (depth0 && depth0.admin_url); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
@@ -6751,12 +6794,12 @@ define("ghost/tpl/hbs-tpl",
         + "/forgotten/\">Forgotten password?</a>\n    </section>\n</form>\n";
       return buffer;
       });
-
+    
     this["JST"]["modal"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       var buffer = "", stack1;
@@ -6764,7 +6807,7 @@ define("ghost/tpl/hbs-tpl",
         + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.type)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       return buffer;
       }
-
+    
     function program3(depth0,data) {
       
       var stack1, stack2;
@@ -6780,7 +6823,7 @@ define("ghost/tpl/hbs-tpl",
         + " ";
       return buffer;
       }
-
+    
     function program6(depth0,data) {
       
       var buffer = "", stack1;
@@ -6789,13 +6832,13 @@ define("ghost/tpl/hbs-tpl",
         + "</h1></header>";
       return buffer;
       }
-
+    
     function program8(depth0,data) {
       
       
       return "<a class=\"close\" href=\"#\" title=\"Close\"><span class=\"hidden\">Close</span></a>";
       }
-
+    
     function program10(depth0,data) {
       
       var buffer = "", stack1, stack2;
@@ -6817,25 +6860,25 @@ define("ghost/tpl/hbs-tpl",
       var stack1;
       return escapeExpression(((stack1 = ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.accept)),stack1 == null || stack1 === false ? stack1 : stack1.buttonClass)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       }
-
+    
     function program13(depth0,data) {
       
       
       return "button-add";
       }
-
+    
     function program15(depth0,data) {
       
       var stack1;
       return escapeExpression(((stack1 = ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.reject)),stack1 == null || stack1 === false ? stack1 : stack1.buttonClass)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       }
-
+    
     function program17(depth0,data) {
       
       
       return "button-delete";
       }
-
+    
       buffer += "<article class=\"modal";
       stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.type), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
       if(stack2 || stack2 === 0) { buffer += stack2; }
@@ -6855,47 +6898,47 @@ define("ghost/tpl/hbs-tpl",
       buffer += "\n    </section>\n</article>";
       return buffer;
       });
-
+    
     this["JST"]["modals/blank"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var stack1, stack2, functionType="function";
-
-
+    
+    
       stack2 = ((stack1 = ((stack1 = (depth0 && depth0.content)),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1);
       if(stack2 || stack2 === 0) { return stack2; }
       else { return ''; }
       });
-
+    
     this["JST"]["modals/copyToHTML"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "Press Ctrl / Cmd + C to copy the following HTML.\n<pre>\n<code class=\"modal-copyToHTML-content\"></code>\n</pre>";
       });
-
+    
     this["JST"]["modals/markdown"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "<section class=\"markdown-help-container\">\n    <table class=\"modal-markdown-help-table\">\n        <thead>\n            <tr>\n                <th>Result</th>\n                <th>Markdown</th>\n                <th>Shortcut</th>\n            </tr>\n        </thead>\n        <tbody>\n            <tr>\n                <td><strong>Bold</strong></td>\n                <td>**text**</td>\n                <td>Ctrl / Cmd + B</td>\n            </tr>\n            <tr>\n                <td><em>Emphasize</em></td>\n                <td>*text*</td>\n                <td>Ctrl / Cmd + I</td>\n            </tr>\n            <tr>\n                <td>Strike-through</td>\n                <td>~~text~~</td>\n                <td>Ctrl + Alt + U</td>\n            </tr>\n            <tr>\n                <td><a href=\"#\">Link</a></td>\n                <td>[title](http://)</td>\n                <td>Ctrl + Shift + L</td>\n            </tr>\n            <tr>\n                <td>Image</td>\n                <td>![alt](http://)</td>\n                <td>Ctrl + Shift + I</td>\n            </tr>\n            <tr>\n                <td>List</td>\n                <td>* item</td>\n                <td>Ctrl + L</td>\n            </tr>\n            <tr>\n                <td>Blockquote</td>\n                <td>> quote</td>\n                <td>Ctrl + Q</td>\n            </tr>\n            <tr>\n                <td>H1</td>\n                <td># Heading</td>\n                <td>Ctrl + Alt + 1</td>\n            </tr>\n            <tr>\n                <td>H2</td>\n                <td>## Heading</td>\n                <td>Ctrl + Alt + 2</td>\n            </tr>\n            <tr>\n                <td>H3</td>\n                <td>### Heading</td>\n                <td>Ctrl + Alt + 3</td>\n            </tr>\n            <tr>\n                <td><code>Inline Code</code></td>\n                <td>`code`</td>\n                <td>Cmd + K / Ctrl + Shift + K</td>\n            </tr>\n        </tbody>\n    </table>\n    For further Markdown syntax reference: <a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Markdown Documentation</a>\n</section>\n";
       });
-
+    
     this["JST"]["modals/uploadImage"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       
       return " style=\"display: none\"";
       }
-
+    
     function program3(depth0,data) {
       
       var buffer = "", stack1;
@@ -6904,7 +6947,7 @@ define("ghost/tpl/hbs-tpl",
         + "\"";
       return buffer;
       }
-
+    
       buffer += "<section class=\"js-drop-zone\">\n    <img class=\"js-upload-target\" src=\""
         + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.src)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
         + "\"";
@@ -6916,12 +6959,12 @@ define("ghost/tpl/hbs-tpl",
       buffer += ">\n</section>\n";
       return buffer;
       });
-
+    
     this["JST"]["notification"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       var buffer = "", stack1;
@@ -6931,7 +6974,7 @@ define("ghost/tpl/hbs-tpl",
       buffer += escapeExpression(stack1);
       return buffer;
       }
-
+    
       buffer += "<section class=\"notification";
       stack1 = helpers['if'].call(depth0, (depth0 && depth0.type), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
       if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -6946,60 +6989,60 @@ define("ghost/tpl/hbs-tpl",
       buffer += "\n    <a class=\"close\" href=\"#\"><span class=\"hidden\">Close</span></a>\n</section>\n";
       return buffer;
       });
-
+    
     this["JST"]["preview"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, stack2, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       
       return "featured";
       }
-
+    
     function program3(depth0,data) {
       
       
       return "unfeatured";
       }
-
+    
     function program5(depth0,data) {
       
       
       return "Unfeature";
       }
-
+    
     function program7(depth0,data) {
       
       
       return "Feature";
       }
-
+    
     function program9(depth0,data) {
       
       
       return "Published";
       }
-
+    
     function program11(depth0,data) {
       
       
       return "Written";
       }
-
+    
     function program13(depth0,data) {
       
       var stack1;
       return escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.author)),stack1 == null || stack1 === false ? stack1 : stack1.name)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       }
-
+    
     function program15(depth0,data) {
       
       var stack1;
       return escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.author)),stack1 == null || stack1 === false ? stack1 : stack1.email)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       }
-
+    
     function program17(depth0,data) {
       
       var buffer = "", stack1;
@@ -7010,7 +7053,7 @@ define("ghost/tpl/hbs-tpl",
         + "/editor/\"><button class=\"button-add large\" title=\"New Post\">Write a new Post</button></form>\n        </div>\n    </div>\n";
       return buffer;
       }
-
+    
       buffer += "<header class=\"floatingheader\">\n    <button class=\"button-back\" href=\"#\">Back</button>\n    <a class=\"";
       stack1 = helpers['if'].call(depth0, (depth0 && depth0.featured), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
       if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -7037,21 +7080,21 @@ define("ghost/tpl/hbs-tpl",
       buffer += "\n";
       return buffer;
       });
-
+    
     this["JST"]["reset"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "<form id=\"reset\" class=\"reset-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"newpassword\" />\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Confirm Password\" name=\"ne2password\" />\n    </div>\n    <button class=\"button-save\" type=\"submit\">Reset Password</button>\n</form>\n";
       });
-
+    
     this["JST"]["settings/apps"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       var buffer = "", stack1;
@@ -7076,7 +7119,7 @@ define("ghost/tpl/hbs-tpl",
         + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0['package'])),stack1 == null || stack1 === false ? stack1 : stack1.version)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       return buffer;
       }
-
+    
     function program4(depth0,data) {
       
       var buffer = "", stack1;
@@ -7086,31 +7129,31 @@ define("ghost/tpl/hbs-tpl",
         + " - package.json missing :(";
       return buffer;
       }
-
+    
     function program6(depth0,data) {
       
       
       return "button-delete js-button-deactivate js-button-active\">Deactivate";
       }
-
+    
     function program8(depth0,data) {
       
       
       return "button-add js-button-activate\">Activate";
       }
-
+    
       buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">Apps</h2>\n</header>\n\n<section class=\"content\">\n    <ul class=\"js-apps\">\n        ";
       stack1 = helpers.each.call(depth0, (depth0 && depth0.availableApps), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
       if(stack1 || stack1 === 0) { buffer += stack1; }
       buffer += "\n    </ul>\n</section>";
       return buffer;
       });
-
+    
     this["JST"]["settings/general"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, self=this;
-
+    
     function program1(depth0,data) {
       
       var buffer = "", stack1;
@@ -7121,13 +7164,13 @@ define("ghost/tpl/hbs-tpl",
         + "\" alt=\"logo\"></a>\n                ";
       return buffer;
       }
-
+    
     function program3(depth0,data) {
       
       
       return "\n                    <a class=\"button-add js-modal-logo\" >Upload Image</a>\n                ";
       }
-
+    
     function program5(depth0,data) {
       
       var buffer = "", stack1;
@@ -7138,13 +7181,13 @@ define("ghost/tpl/hbs-tpl",
         + "\" alt=\"cover photo\"></a>\n                ";
       return buffer;
       }
-
+    
     function program7(depth0,data) {
       
       
       return "\n                    <a class=\"button-add js-modal-cover\">Upload Image</a>\n                ";
       }
-
+    
     function program9(depth0,data) {
       
       var buffer = "", stack1;
@@ -7169,7 +7212,7 @@ define("ghost/tpl/hbs-tpl",
       
       return "selected";
       }
-
+    
     function program12(depth0,data) {
       
       var buffer = "", stack1;
@@ -7178,7 +7221,7 @@ define("ghost/tpl/hbs-tpl",
         + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0['package'])),stack1 == null || stack1 === false ? stack1 : stack1.version)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1));
       return buffer;
       }
-
+    
     function program14(depth0,data) {
       
       var stack1;
@@ -7186,7 +7229,7 @@ define("ghost/tpl/hbs-tpl",
       else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
       return escapeExpression(stack1);
       }
-
+    
     function program16(depth0,data) {
       
       var buffer = "", stack1;
@@ -7197,7 +7240,7 @@ define("ghost/tpl/hbs-tpl",
         + "\" does not have a package.json file or it\\'s malformed. This will be required in the future. For more info, see http://docs.ghost.org/themes/.');</script>";
       return buffer;
       }
-
+    
       buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">General</h2>\n    <section class=\"page-actions\">\n        <button class=\"button-save\">Save</button>\n    </section>\n</header>\n\n<section class=\"content\">\n    <form id=\"settings-general\" novalidate=\"novalidate\">\n        <fieldset>\n\n            <div class=\"form-group\">\n                <label for=\"blog-title\">Blog Title</label>\n                <input id=\"blog-title\" name=\"general[title]\" type=\"text\" value=\"";
       if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
       else { stack1 = (depth0 && depth0.title); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
@@ -7226,21 +7269,21 @@ define("ghost/tpl/hbs-tpl",
       buffer += "\n                </select>\n                <p>Select a theme for your blog</p>\n            </div>\n\n        </fieldset>\n    </form>\n</section>\n";
       return buffer;
       });
-
+    
     this["JST"]["settings/sidebar"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "<header>\n    <h1 class=\"title\">Settings</h1>\n</header>\n<nav class=\"settings-menu\">\n    <ul>\n        <li class=\"general\"><a href=\"#general\">General</a></li>\n        <li class=\"users\"><a href=\"#user\">User</a></li>\n        <li class=\"apps\"><a href=\"#apps\">Apps</a></li>\n    </ul>\n</nav>";
       });
-
+    
     this["JST"]["settings/user-profile"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression, helperMissing=helpers.helperMissing, self=this;
-
+    
     function program1(depth0,data) {
       
       var stack1;
@@ -7248,14 +7291,14 @@ define("ghost/tpl/hbs-tpl",
       else { stack1 = (depth0 && depth0.cover); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
       return escapeExpression(stack1);
       }
-
+    
     function program3(depth0,data) {
       
       var stack1, options;
       options = {hash:{},data:data};
       return escapeExpression(((stack1 = helpers.asset || (depth0 && depth0.asset)),stack1 ? stack1.call(depth0, "shared/img/user-cover.png", options) : helperMissing.call(depth0, "asset", "shared/img/user-cover.png", options)));
       }
-
+    
     function program5(depth0,data) {
       
       var stack1;
@@ -7263,14 +7306,14 @@ define("ghost/tpl/hbs-tpl",
       else { stack1 = (depth0 && depth0.image); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
       return escapeExpression(stack1);
       }
-
+    
     function program7(depth0,data) {
       
       var stack1, options;
       options = {hash:{},data:data};
       return escapeExpression(((stack1 = helpers.asset || (depth0 && depth0.asset)),stack1 ? stack1.call(depth0, "shared/img/user-image.png", options) : helperMissing.call(depth0, "asset", "shared/img/user-image.png", options)));
       }
-
+    
       buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">Your Profile</h2>\n    <section class=\"page-actions\">\n        <button class=\"button-save\">Save</button>\n    </section>\n</header>\n\n<section class=\"content no-padding\">\n\n    <header class=\"user-profile-header\">\n        <img id=\"user-cover\" class=\"cover-image\" src=\"";
       stack1 = helpers['if'].call(depth0, (depth0 && depth0.cover), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
       if(stack1 || stack1 === 0) { buffer += stack1; }
@@ -7308,13 +7351,13 @@ define("ghost/tpl/hbs-tpl",
         + "</textarea>\n                <p>\n                    Write about you, in 200 characters or less.\n                    <span class=\"word-count\">0</span>\n                </p>\n            </div>\n\n            <hr />\n\n        </fieldset>\n\n        <fieldset>\n\n            <div class=\"form-group\">\n                <label for=\"user-password-old\">Old Password</label>\n                <input type=\"password\" id=\"user-password-old\" />\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-password-new\">New Password</label>\n                <input type=\"password\" id=\"user-password-new\" />\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-new-password-verification\">Verify Password</label>\n                <input type=\"password\" id=\"user-new-password-verification\" />\n            </div>\n            <div class=\"form-group\">\n                <button type=\"button\" class=\"button-delete button-change-password\">Change Password</button>\n            </div>\n\n        </fieldset>\n\n    </form>\n</section>\n";
       return buffer;
       });
-
+    
     this["JST"]["signup"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
       this.compilerInfo = [4,'>= 1.0.0'];
     helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
       
-
-
+    
+    
       return "<form id=\"signup\" class=\"signup-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"name-wrap\">\n        <input class=\"name\" type=\"text\" placeholder=\"Full Name\" name=\"name\" autocorrect=\"off\" />\n    </div>\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\" />\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\" />\n    </div>\n    <button class=\"button-save\" type=\"submit\">Sign Up</button>\n</form>\n";
       });
   });
@@ -7340,17 +7383,17 @@ define("ghost/utils/date-formatting",
                             "DD-MM-YYYY HH:mm",
                             "YYYY-MM-DD HH:mm"],
         displayDateFormat = 'DD MMM YY @ HH:mm';
-
+    
     //Parses a string to a Moment
     var parseDateString = function (value) {
         return value ? moment(value, parseDateFormats) : '';
     };
-
+    
     //Formats a Date or Moment
     var formatDate = function (value) {
         return value ? moment(value).format(displayDateFormat) : '';
     };
-
+    
     __exports__.parseDateString = parseDateString;
     __exports__.formatDate = formatDate;
   });
@@ -7361,9 +7404,9 @@ define("ghost/utils/link-view",
     Ember.LinkView.reopen({
         active: Ember.computed('resolvedParams', 'routeArgs', function () {
             var isActive = this._super();
-
+    
             Ember.set(this, 'alternateActive', isActive);
-
+    
             return isActive;
         })
     });
@@ -7396,7 +7439,7 @@ define("ghost/utils/notifications",
         },
         showAPIError: function (resp, defaultErrorText) {
             defaultErrorText = defaultErrorText || 'There was a problem on the server, please try again.';
-
+    
             if (resp && resp.jqXHR && resp.jqXHR.responseJSON && resp.jqXHR.responseJSON.error) {
                 this.showError(resp.jqXHR.responseJSON.error);
             } else {
@@ -7422,7 +7465,7 @@ define("ghost/utils/notifications",
             });
         }
     });
-
+    
     __exports__["default"] = Notifications;
   });
 define("ghost/utils/text-field", 
@@ -7458,7 +7501,7 @@ define("ghost/views/item-view",
     "use strict";
     __exports__["default"] = Ember.View.extend({
         classNameBindings: ['active'],
-
+    
         active: function () {
             return this.get('childViews.firstObject.active');
         }.property('childViews.firstObject.active')
@@ -7470,12 +7513,13 @@ define("ghost/views/post-item-view",
     "use strict";
     var itemView = __dependency1__["default"];
 
+    
     var PostItemView = itemView.extend({
         openEditor: function () {
             this.get('controller').send('openEditor', this.get('controller.model'));  // send action to handle transition to editor route
         }.on("doubleClick")
     });
-
+    
     __exports__["default"] = PostItemView;
   });
 define("ghost/views/post-settings-menu-view", 
@@ -7485,6 +7529,7 @@ define("ghost/views/post-settings-menu-view",
     /* global moment */
     var formatDate = __dependency1__.formatDate;
 
+    
     var PostSettingsMenuView = Ember.View.extend({
         templateName: 'post-settings-menu',
         classNames: ['post-settings-menu', 'menu-drop-right', 'overlay'],
@@ -7498,7 +7543,7 @@ define("ghost/views/post-settings-menu-view",
             return formatDate(moment());
         }.property('controller.publishedAt')
     });
-
+    
     __exports__["default"] = PostSettingsMenuView;
   });
 //# sourceMappingURL=ghost-dev-ember.js.map

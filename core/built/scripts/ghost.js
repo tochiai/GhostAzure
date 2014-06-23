@@ -49705,7 +49705,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form id=\"forgotten\" class=\"forgotten-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\n    </div>\n    <button class=\"button-save\" type=\"submit\">Send new password</button>\n</form>\n";
+  return "<form id=\"forgotten\" class=\"forgotten-form\" method=\"post\" novalidate=\"novalidate\">\r\n    <div class=\"email-wrap\">\r\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\r\n    </div>\r\n    <button class=\"button-save\" type=\"submit\">Send new password</button>\r\n</form>\r\n";
   });
 
 this["JST"]["list-item"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -49728,39 +49728,39 @@ function program3(depth0,data) {
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n            ";
+  buffer += "\r\n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.page), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        ";
+  buffer += "\r\n        ";
   return buffer;
   }
 function program6(depth0,data) {
   
   
-  return "\n                    <span class=\"page\">Page</span>\n            ";
+  return "\r\n                    <span class=\"page\">Page</span>\r\n            ";
   }
 
 function program8(depth0,data) {
   
   var buffer = "", stack1, options;
-  buffer += "\n                <time datetime=\"";
+  buffer += "\r\n                <time datetime=\"";
   options = {hash:{
     'format': ("YYYY-MM-DD hh:mm")
   },data:data};
   buffer += escapeExpression(((stack1 = helpers.date || (depth0 && depth0.date)),stack1 ? stack1.call(depth0, (depth0 && depth0.published_at), options) : helperMissing.call(depth0, "date", (depth0 && depth0.published_at), options)))
-    + "\" class=\"date published\">\n                    Published ";
+    + "\" class=\"date published\">\r\n                    Published ";
   options = {hash:{
     'timeago': ("True")
   },data:data};
   buffer += escapeExpression(((stack1 = helpers.date || (depth0 && depth0.date)),stack1 ? stack1.call(depth0, (depth0 && depth0.published_at), options) : helperMissing.call(depth0, "date", (depth0 && depth0.published_at), options)))
-    + "\n                </time>\n            ";
+    + "\r\n                </time>\r\n            ";
   return buffer;
   }
 
 function program10(depth0,data) {
   
   
-  return "\n            <span class=\"draft\">Draft</span>\n        ";
+  return "\r\n            <span class=\"draft\">Draft</span>\r\n        ";
   }
 
   buffer += "<a class=\"permalink";
@@ -49768,14 +49768,14 @@ function program10(depth0,data) {
   if(stack1 || stack1 === 0) { buffer += stack1; }
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.page), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\" href=\"#\" title=\"Edit this post\">\n    <h3 class=\"entry-title\">";
+  buffer += "\" href=\"#\" title=\"Edit this post\">\r\n    <h3 class=\"entry-title\">";
   if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.title); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</h3>\n    <section class=\"entry-meta\">\n        <span class=\"status\">\n        ";
+  buffer += "</h3>\r\n    <section class=\"entry-meta\">\r\n        <span class=\"status\">\r\n        ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.published), {hash:{},inverse:self.program(10, program10, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n        </span>\n    </section>\n</a>\n";
+  buffer += "\r\n        </span>\r\n    </section>\r\n</a>\r\n";
   return buffer;
   });
 
@@ -49785,11 +49785,11 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   var buffer = "", stack1, functionType="function", escapeExpression=this.escapeExpression;
 
 
-  buffer += "<form id=\"login\" class=\"login-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\">\n    </div>\n    <button class=\"button-save\" type=\"submit\">Log in</button>\n    <section class=\"meta\">\n        <a class=\"forgotten-password\" href=\"";
+  buffer += "<form id=\"login\" class=\"login-form\" method=\"post\" novalidate=\"novalidate\">\r\n    <div class=\"email-wrap\">\r\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\">\r\n    </div>\r\n    <div class=\"password-wrap\">\r\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\">\r\n    </div>\r\n    <button class=\"button-save\" type=\"submit\">Log in</button>\r\n    <section class=\"meta\">\r\n        <a class=\"forgotten-password\" href=\"";
   if (stack1 = helpers.admin_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.admin_url); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "/forgotten/\">Forgotten password?</a>\n    </section>\n</form>\n";
+    + "/forgotten/\">Forgotten password?</a>\r\n    </section>\r\n</form>\r\n";
   return buffer;
   });
 
@@ -49840,17 +49840,17 @@ function program8(depth0,data) {
 function program10(depth0,data) {
   
   var buffer = "", stack1, stack2;
-  buffer += "\n        <footer class=\"modal-footer\">\n            <button class=\"js-button-accept ";
+  buffer += "\r\n        <footer class=\"modal-footer\">\r\n            <button class=\"js-button-accept ";
   stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.accept)),stack1 == null || stack1 === false ? stack1 : stack1.buttonClass), {hash:{},inverse:self.program(13, program13, data),fn:self.program(11, program11, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\">"
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.accept)),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</button>\n            <button class=\"js-button-reject ";
+    + "</button>\r\n            <button class=\"js-button-reject ";
   stack2 = helpers['if'].call(depth0, ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.reject)),stack1 == null || stack1 === false ? stack1 : stack1.buttonClass), {hash:{},inverse:self.program(17, program17, data),fn:self.program(15, program15, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += "\">"
     + escapeExpression(((stack1 = ((stack1 = ((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm)),stack1 == null || stack1 === false ? stack1 : stack1.reject)),stack1 == null || stack1 === false ? stack1 : stack1.text)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + "</button>\n        </footer>\n        ";
+    + "</button>\r\n        </footer>\r\n        ";
   return buffer;
   }
 function program11(depth0,data) {
@@ -49884,16 +49884,16 @@ function program17(depth0,data) {
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.style), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
   buffer += escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.animation)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
-    + " js-modal\">\n    <section class=\"modal-content\">\n        ";
+    + " js-modal\">\r\n    <section class=\"modal-content\">\r\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.content)),stack1 == null || stack1 === false ? stack1 : stack1.title), {hash:{},inverse:self.noop,fn:self.program(6, program6, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        ";
+  buffer += "\r\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.close), {hash:{},inverse:self.noop,fn:self.program(8, program8, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n        <section class=\"modal-body\">\n        </section>\n        ";
+  buffer += "\r\n        <section class=\"modal-body\">\r\n        </section>\r\n        ";
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.confirm), {hash:{},inverse:self.noop,fn:self.program(10, program10, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n    </section>\n</article>";
+  buffer += "\r\n    </section>\r\n</article>";
   return buffer;
   });
 
@@ -49914,7 +49914,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "Press Ctrl / Cmd + C to copy the following HTML.\n<pre>\n<code class=\"modal-copyToHTML-content\"></code>\n</pre>";
+  return "Press Ctrl / Cmd + C to copy the following HTML.\r\n<pre>\r\n<code class=\"modal-copyToHTML-content\"></code>\r\n</pre>";
   });
 
 this["JST"]["modals/markdown"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -49923,7 +49923,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<section class=\"markdown-help-container\">\n    <table class=\"modal-markdown-help-table\">\n        <thead>\n        <tr>\n            <th>Result</th>\n            <th>Markdown</th>\n            <th>Shortcut</th>\n        </tr>\n        </thead>\n        <tbody>\n        <tr>\n            <td><strong>Bold</strong></td>\n            <td>**text**</td>\n            <td>Ctrl / Cmd + B</td>\n        </tr>\n        <tr>\n            <td><em>Emphasize</em></td>\n            <td>*text*</td>\n            <td>Ctrl / Cmd + I</td>\n        </tr>\n        <tr>\n            <td>Strike-through</td>\n            <td>~~text~~</td>\n            <td>Ctrl + Alt + U</td>\n        </tr>\n        <tr>\n            <td><a href=\"#\">Link</a></td>\n            <td>[title](http://)</td>\n            <td>Ctrl + Shift + L</td>\n        </tr>\n        <tr>\n            <td>Image</td>\n            <td>![alt](http://)</td>\n            <td>Ctrl + Shift + I</td>\n        </tr>\n        <tr>\n            <td>List</td>\n            <td>* item</td>\n            <td>Ctrl + L</td>\n        </tr>\n        <tr>\n            <td>Blockquote</td>\n            <td>> quote</td>\n            <td>Ctrl + Q</td>\n        </tr>\n        <tr>\n            <td>H1</td>\n            <td># Heading</td>\n            <td>Ctrl + Alt + 1</td>\n        </tr>\n        <tr>\n            <td>H2</td>\n            <td>## Heading</td>\n            <td>Ctrl + Alt + 2</td>\n        </tr>\n        <tr>\n            <td>H3</td>\n            <td>### Heading</td>\n            <td>Ctrl + Alt + 3</td>\n        </tr>\n        <tr>\n            <td><code>Inline Code</code></td>\n            <td>`code`</td>\n            <td>Cmd + K / Ctrl + Shift + K</td>\n        </tr>\n        </tbody>\n    </table>\n    For further Markdown syntax reference: <a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Markdown Documentation</a>\n</section>";
+  return "<section class=\"markdown-help-container\">\r\n    <table class=\"modal-markdown-help-table\">\r\n        <thead>\r\n        <tr>\r\n            <th>Result</th>\r\n            <th>Markdown</th>\r\n            <th>Shortcut</th>\r\n        </tr>\r\n        </thead>\r\n        <tbody>\r\n        <tr>\r\n            <td><strong>Bold</strong></td>\r\n            <td>**text**</td>\r\n            <td>Ctrl / Cmd + B</td>\r\n        </tr>\r\n        <tr>\r\n            <td><em>Emphasize</em></td>\r\n            <td>*text*</td>\r\n            <td>Ctrl / Cmd + I</td>\r\n        </tr>\r\n        <tr>\r\n            <td>Strike-through</td>\r\n            <td>~~text~~</td>\r\n            <td>Ctrl + Alt + U</td>\r\n        </tr>\r\n        <tr>\r\n            <td><a href=\"#\">Link</a></td>\r\n            <td>[title](http://)</td>\r\n            <td>Ctrl + Shift + L</td>\r\n        </tr>\r\n        <tr>\r\n            <td>Image</td>\r\n            <td>![alt](http://)</td>\r\n            <td>Ctrl + Shift + I</td>\r\n        </tr>\r\n        <tr>\r\n            <td>List</td>\r\n            <td>* item</td>\r\n            <td>Ctrl + L</td>\r\n        </tr>\r\n        <tr>\r\n            <td>Blockquote</td>\r\n            <td>> quote</td>\r\n            <td>Ctrl + Q</td>\r\n        </tr>\r\n        <tr>\r\n            <td>H1</td>\r\n            <td># Heading</td>\r\n            <td>Ctrl + Alt + 1</td>\r\n        </tr>\r\n        <tr>\r\n            <td>H2</td>\r\n            <td>## Heading</td>\r\n            <td>Ctrl + Alt + 2</td>\r\n        </tr>\r\n        <tr>\r\n            <td>H3</td>\r\n            <td>### Heading</td>\r\n            <td>Ctrl + Alt + 3</td>\r\n        </tr>\r\n        <tr>\r\n            <td><code>Inline Code</code></td>\r\n            <td>`code`</td>\r\n            <td>Cmd + K / Ctrl + Shift + K</td>\r\n        </tr>\r\n        </tbody>\r\n    </table>\r\n    For further Markdown syntax reference: <a href=\"http://daringfireball.net/projects/markdown/syntax\" target=\"_blank\">Markdown Documentation</a>\r\n</section>";
   });
 
 this["JST"]["modals/uploadImage"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -49946,15 +49946,15 @@ function program3(depth0,data) {
   return buffer;
   }
 
-  buffer += "<section class=\"js-drop-zone\">\n    <img class=\"js-upload-target\" src=\""
+  buffer += "<section class=\"js-drop-zone\">\r\n    <img class=\"js-upload-target\" src=\""
     + escapeExpression(((stack1 = ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.src)),typeof stack1 === functionType ? stack1.apply(depth0) : stack1))
     + "\"";
   stack2 = helpers.unless.call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.src), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += " alt=\"logo\">\n    <input data-url=\"upload\" class=\"js-fileupload main\" type=\"file\" name=\"uploadimage\" ";
+  buffer += " alt=\"logo\">\r\n    <input data-url=\"upload\" class=\"js-fileupload main\" type=\"file\" name=\"uploadimage\" ";
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.options)),stack1 == null || stack1 === false ? stack1 : stack1.acceptEncoding), {hash:{},inverse:self.noop,fn:self.program(3, program3, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += ">\n</section>\n";
+  buffer += ">\r\n</section>\r\n";
   return buffer;
   });
 
@@ -49980,11 +49980,11 @@ function program1(depth0,data) {
   if (stack1 = helpers.status) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.status); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + " js-notification\">\n    ";
+    + " js-notification\">\r\n    ";
   if (stack1 = helpers.message) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.message); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    <a class=\"close\" href=\"#\"><span class=\"hidden\">Close</span></a>\n</section>\n";
+  buffer += "\r\n    <a class=\"close\" href=\"#\"><span class=\"hidden\">Close</span></a>\r\n</section>\r\n";
   return buffer;
   });
 
@@ -50044,27 +50044,27 @@ function program15(depth0,data) {
 function program17(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n    <div class=\"no-posts-box\">\n        <div class=\"no-posts\">\n            <h3>You Haven't Written Any Posts Yet!</h3>\n            <form action=\"";
+  buffer += "\r\n    <div class=\"no-posts-box\">\r\n        <div class=\"no-posts\">\r\n            <h3>You Haven't Written Any Posts Yet!</h3>\r\n            <form action=\"";
   if (stack1 = helpers.admin_url) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.admin_url); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "/editor/\"><button class=\"button-add large\" title=\"New Post\">Write a new Post</button></form>\n        </div>\n    </div>\n";
+    + "/editor/\"><button class=\"button-add large\" title=\"New Post\">Write a new Post</button></form>\r\n        </div>\r\n    </div>\r\n";
   return buffer;
   }
 
-  buffer += "<header class=\"floatingheader\">\n    <button class=\"button-back\" href=\"#\">Back</button>\n    <a class=\"";
+  buffer += "<header class=\"floatingheader\">\r\n    <button class=\"button-back\" href=\"#\">Back</button>\r\n    <a class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.featured), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" href=\"#\" title=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.featured), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += " this post\">\n        <span class=\"hidden\">Star</span>\n    </a>\n    <small>\n        <span class=\"status\">";
+  buffer += " this post\">\r\n        <span class=\"hidden\">Star</span>\r\n    </a>\r\n    <small>\r\n        <span class=\"status\">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.published), {hash:{},inverse:self.program(11, program11, data),fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</span>\n        <span class=\"normal\">by</span>\n        <span class=\"author\">";
+  buffer += "</span>\r\n        <span class=\"normal\">by</span>\r\n        <span class=\"author\">";
   stack2 = helpers['if'].call(depth0, ((stack1 = (depth0 && depth0.author)),stack1 == null || stack1 === false ? stack1 : stack1.name), {hash:{},inverse:self.program(15, program15, data),fn:self.program(13, program13, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "</span>\n    </small>\n    <section class=\"post-controls\">\n        <a class=\"post-edit\" href=\"#\" title=\"Edit Post\"><span class=\"hidden\">Edit Post</span></a>\n        <a class=\"post-settings\" href=\"#\" data-toggle=\".post-settings-menu\" title=\"Post Settings\"><span class=\"hidden\">Post Settings</span></a>\n        <div class=\"post-settings-menu menu-drop-right overlay\">\n            <form>\n                <table class=\"plain\">\n                    <tr class=\"post-setting\">\n                        <td class=\"post-setting-label\">\n                            <label for=\"url\">URL</label>\n                        </td>\n                        <td class=\"post-setting-field\">\n                            <input id=\"url\" class=\"post-setting-slug\" type=\"text\" value=\"\" />\n                        </td>\n                    </tr>\n                    <tr class=\"post-setting\">\n                        <td class=\"post-setting-label\">\n                            <label for=\"pub-date\">Pub Date</label>\n                        </td>\n                        <td class=\"post-setting-field\">\n                            <input id=\"pub-date\" class=\"post-setting-date\" type=\"text\" value=\"\"><!--<span class=\"post-setting-calendar\"></span>-->\n                        </td>\n                    </tr>\n                    <tr class=\"post-setting\">\n                        <td class=\"post-setting-label\">\n                            <span class=\"label\">Static Page</span>\n                        </td>\n                        <td class=\"post-setting-item\">\n                            <input id=\"static-page\" class=\"post-setting-static-page\" type=\"checkbox\" value=\"\">\n                            <label class=\"checkbox\" for=\"static-page\"></label>\n                        </td>\n                    </tr>\n                </table>\n            </form>\n            <a class=\"delete\" href=\"#\">Delete This Post</a>\n        </div>\n    </section>\n</header>\n<section class=\"content-preview-content\">\n    <div class=\"wrapper\"><h1>";
+  buffer += "</span>\r\n    </small>\r\n    <section class=\"post-controls\">\r\n        <a class=\"post-edit\" href=\"#\" title=\"Edit Post\"><span class=\"hidden\">Edit Post</span></a>\r\n        <a class=\"post-settings\" href=\"#\" data-toggle=\".post-settings-menu\" title=\"Post Settings\"><span class=\"hidden\">Post Settings</span></a>\r\n        <div class=\"post-settings-menu menu-drop-right overlay\">\r\n            <form>\r\n                <table class=\"plain\">\r\n                    <tr class=\"post-setting\">\r\n                        <td class=\"post-setting-label\">\r\n                            <label for=\"url\">URL</label>\r\n                        </td>\r\n                        <td class=\"post-setting-field\">\r\n                            <input id=\"url\" class=\"post-setting-slug\" type=\"text\" value=\"\" />\r\n                        </td>\r\n                    </tr>\r\n                    <tr class=\"post-setting\">\r\n                        <td class=\"post-setting-label\">\r\n                            <label for=\"pub-date\">Pub Date</label>\r\n                        </td>\r\n                        <td class=\"post-setting-field\">\r\n                            <input id=\"pub-date\" class=\"post-setting-date\" type=\"text\" value=\"\"><!--<span class=\"post-setting-calendar\"></span>-->\r\n                        </td>\r\n                    </tr>\r\n                    <tr class=\"post-setting\">\r\n                        <td class=\"post-setting-label\">\r\n                            <span class=\"label\">Static Page</span>\r\n                        </td>\r\n                        <td class=\"post-setting-item\">\r\n                            <input id=\"static-page\" class=\"post-setting-static-page\" type=\"checkbox\" value=\"\">\r\n                            <label class=\"checkbox\" for=\"static-page\"></label>\r\n                        </td>\r\n                    </tr>\r\n                </table>\r\n            </form>\r\n            <a class=\"delete\" href=\"#\">Delete This Post</a>\r\n        </div>\r\n    </section>\r\n</header>\r\n<section class=\"content-preview-content\">\r\n    <div class=\"wrapper\"><h1>";
   if (stack2 = helpers.title) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = (depth0 && depth0.title); stack2 = typeof stack2 === functionType ? stack2.call(depth0, {hash:{},data:data}) : stack2; }
   if(stack2 || stack2 === 0) { buffer += stack2; }
@@ -50072,10 +50072,10 @@ function program17(depth0,data) {
   if (stack2 = helpers.html) { stack2 = stack2.call(depth0, {hash:{},data:data}); }
   else { stack2 = (depth0 && depth0.html); stack2 = typeof stack2 === functionType ? stack2.call(depth0, {hash:{},data:data}) : stack2; }
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "</div>\n</section>\n";
+  buffer += "</div>\r\n</section>\r\n";
   stack2 = helpers.unless.call(depth0, (depth0 && depth0.title), {hash:{},inverse:self.noop,fn:self.program(17, program17, data),data:data});
   if(stack2 || stack2 === 0) { buffer += stack2; }
-  buffer += "\n";
+  buffer += "\r\n";
   return buffer;
   });
 
@@ -50085,7 +50085,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form id=\"reset\" class=\"reset-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"newpassword\" />\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Confirm Password\" name=\"ne2password\" />\n    </div>\n    <button class=\"button-save\" type=\"submit\">Reset Password</button>\n</form>\n";
+  return "<form id=\"reset\" class=\"reset-form\" method=\"post\" novalidate=\"novalidate\">\r\n    <div class=\"password-wrap\">\r\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"newpassword\" />\r\n    </div>\r\n    <div class=\"password-wrap\">\r\n        <input class=\"password\" type=\"password\" placeholder=\"Confirm Password\" name=\"ne2password\" />\r\n    </div>\r\n    <button class=\"button-save\" type=\"submit\">Reset Password</button>\r\n</form>\r\n";
   });
 
 this["JST"]["settings/apps"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -50096,17 +50096,17 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n        <li>\n            ";
+  buffer += "\r\n        <li>\r\n            ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0['package']), {hash:{},inverse:self.program(4, program4, data),fn:self.program(2, program2, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n            <button data-app=\"";
+  buffer += "\r\n            <button data-app=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
     + "\" class=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.active), {hash:{},inverse:self.program(8, program8, data),fn:self.program(6, program6, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</button>\n        </li>\n        ";
+  buffer += "</button>\r\n        </li>\r\n        ";
   return buffer;
   }
 function program2(depth0,data) {
@@ -50140,10 +50140,10 @@ function program8(depth0,data) {
   return "button-add js-button-activate\">Activate";
   }
 
-  buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">Apps</h2>\n</header>\n\n<section class=\"content\">\n    <ul class=\"js-apps\">\n        ";
+  buffer += "<header>\r\n    <button class=\"button-back\">Back</button>\r\n    <h2 class=\"title\">Apps</h2>\r\n</header>\r\n\r\n<section class=\"content\">\r\n    <ul class=\"js-apps\">\r\n        ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.availableApps), {hash:{},inverse:self.noop,fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n    </ul>\n</section>";
+  buffer += "\r\n    </ul>\r\n</section>";
   return buffer;
   });
 
@@ -50155,41 +50155,41 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
 function program1(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n                    <a class=\"js-modal-logo\" href=\"#\"><img id=\"blog-logo\" src=\"";
+  buffer += "\r\n                    <a class=\"js-modal-logo\" href=\"#\"><img id=\"blog-logo\" src=\"";
   if (stack1 = helpers.logo) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.logo); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" alt=\"logo\"></a>\n                ";
+    + "\" alt=\"logo\"></a>\r\n                ";
   return buffer;
   }
 
 function program3(depth0,data) {
   
   
-  return "\n                    <a class=\"button-add js-modal-logo\" >Upload Image</a>\n                ";
+  return "\r\n                    <a class=\"button-add js-modal-logo\" >Upload Image</a>\r\n                ";
   }
 
 function program5(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n                    <a class=\"js-modal-cover\" href=\"#\"><img id=\"blog-cover\" src=\"";
+  buffer += "\r\n                    <a class=\"js-modal-cover\" href=\"#\"><img id=\"blog-cover\" src=\"";
   if (stack1 = helpers.cover) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.cover); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" alt=\"cover photo\"></a>\n                ";
+    + "\" alt=\"cover photo\"></a>\r\n                ";
   return buffer;
   }
 
 function program7(depth0,data) {
   
   
-  return "\n                    <a class=\"button-add js-modal-cover\">Upload Image</a>\n                ";
+  return "\r\n                    <a class=\"button-add js-modal-cover\">Upload Image</a>\r\n                ";
   }
 
 function program9(depth0,data) {
   
   var buffer = "", stack1;
-  buffer += "\n                        <option value=\"";
+  buffer += "\r\n                        <option value=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
@@ -50199,10 +50199,10 @@ function program9(depth0,data) {
   buffer += ">";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0['package']), {hash:{},inverse:self.program(14, program14, data),fn:self.program(12, program12, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "</option>\n                        ";
+  buffer += "</option>\r\n                        ";
   stack1 = helpers.unless.call(depth0, (depth0 && depth0['package']), {hash:{},inverse:self.noop,fn:self.program(16, program16, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                    ";
+  buffer += "\r\n                    ";
   return buffer;
   }
 function program10(depth0,data) {
@@ -50239,32 +50239,32 @@ function program16(depth0,data) {
   return buffer;
   }
 
-  buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">General</h2>\n    <section class=\"page-actions\">\n        <button class=\"button-save\">Save</button>\n    </section>\n</header>\n\n<section class=\"content\">\n    <form id=\"settings-general\" novalidate=\"novalidate\">\n        <fieldset>\n\n            <div class=\"form-group\">\n                <label for=\"blog-title\">Blog Title</label>\n                <input id=\"blog-title\" name=\"general[title]\" type=\"text\" value=\"";
+  buffer += "<header>\r\n    <button class=\"button-back\">Back</button>\r\n    <h2 class=\"title\">General</h2>\r\n    <section class=\"page-actions\">\r\n        <button class=\"button-save\">Save</button>\r\n    </section>\r\n</header>\r\n\r\n<section class=\"content\">\r\n    <form id=\"settings-general\" novalidate=\"novalidate\">\r\n        <fieldset>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"blog-title\">Blog Title</label>\r\n                <input id=\"blog-title\" name=\"general[title]\" type=\"text\" value=\"";
   if (stack1 = helpers.title) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.title); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" />\n                <p>The name of your blog</p>\n            </div>\n\n            <div class=\"form-group description-container\">\n                <label for=\"blog-description\">Blog Description</label>\n                <textarea id=\"blog-description\">";
+    + "\" />\r\n                <p>The name of your blog</p>\r\n            </div>\r\n\r\n            <div class=\"form-group description-container\">\r\n                <label for=\"blog-description\">Blog Description</label>\r\n                <textarea id=\"blog-description\">";
   if (stack1 = helpers.description) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.description); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</textarea>\n                <p>\n                    Describe what your blog is about\n                    <span class=\"word-count\">0</span>\n                </p>\n\n            </div>\n        </fieldset>\n            <div class=\"form-group\">\n                <label for=\"blog-logo\">Blog Logo</label>\n                ";
+    + "</textarea>\r\n                <p>\r\n                    Describe what your blog is about\r\n                    <span class=\"word-count\">0</span>\r\n                </p>\r\n\r\n            </div>\r\n        </fieldset>\r\n            <div class=\"form-group\">\r\n                <label for=\"blog-logo\">Blog Logo</label>\r\n                ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.logo), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                <p>Display a sexy logo for your publication</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"blog-cover\">Blog Cover</label>\n                ";
+  buffer += "\r\n                <p>Display a sexy logo for your publication</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"blog-cover\">Blog Cover</label>\r\n                ";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.cover), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                <p>Display a cover image on your site</p>\n            </div>\n        <fieldset>\n            <div class=\"form-group\">\n                <label for=\"email-address\">Email Address</label>\n                <input id=\"email-address\" name=\"general[email-address]\" type=\"email\" value=\"";
+  buffer += "\r\n                <p>Display a cover image on your site</p>\r\n            </div>\r\n        <fieldset>\r\n            <div class=\"form-group\">\r\n                <label for=\"email-address\">Email Address</label>\r\n                <input id=\"email-address\" name=\"general[email-address]\" type=\"email\" value=\"";
   if (stack1 = helpers.email) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.email); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" autocapitalize=\"off\" autocorrect=\"off\" />\n                <p>Address to use for admin notifications</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"postsPerPage\">Posts per page</label>\n                <input id=\"postsPerPage\" name=\"general[postsPerPage]\" type=\"number\" value=\"";
+    + "\" autocapitalize=\"off\" autocorrect=\"off\" />\r\n                <p>Address to use for admin notifications</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"postsPerPage\">Posts per page</label>\r\n                <input id=\"postsPerPage\" name=\"general[postsPerPage]\" type=\"number\" value=\"";
   if (stack1 = helpers.postsPerPage) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.postsPerPage); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" />\n                <p>How many posts should be displayed on each page</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"permalinks\">Dated Permalinks</label>\n                <input id=\"permalinks\" name=\"general[permalinks]\" type=\"checkbox\" value='permalink'/>\n                <label class=\"checkbox\" for=\"permalinks\"></label>\n                <p>Include the date in your post URLs</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"activeTheme\">Theme</label>\n                <select id=\"activeTheme\" name=\"general[activeTheme]\">\n                    ";
+    + "\" />\r\n                <p>How many posts should be displayed on each page</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"permalinks\">Dated Permalinks</label>\r\n                <input id=\"permalinks\" name=\"general[permalinks]\" type=\"checkbox\" value='permalink'/>\r\n                <label class=\"checkbox\" for=\"permalinks\"></label>\r\n                <p>Include the date in your post URLs</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"activeTheme\">Theme</label>\r\n                <select id=\"activeTheme\" name=\"general[activeTheme]\">\r\n                    ";
   stack1 = helpers.each.call(depth0, (depth0 && depth0.availableThemes), {hash:{},inverse:self.noop,fn:self.program(9, program9, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
-  buffer += "\n                </select>\n                <p>Select a theme for your blog</p>\n            </div>\n\n        </fieldset>\n    </form>\n</section>\n";
+  buffer += "\r\n                </select>\r\n                <p>Select a theme for your blog</p>\r\n            </div>\r\n\r\n        </fieldset>\r\n    </form>\r\n</section>\r\n";
   return buffer;
   });
 
@@ -50274,7 +50274,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<header>\n    <h1 class=\"title\">Settings</h1>\n</header>\n<nav class=\"settings-menu\">\n    <ul>\n        <li class=\"general\"><a href=\"#general\">General</a></li>\n        <li class=\"users\"><a href=\"#user\">User</a></li>\n        <li class=\"apps\"><a href=\"#apps\">Apps</a></li>\n    </ul>\n</nav>";
+  return "<header>\r\n    <h1 class=\"title\">Settings</h1>\r\n</header>\r\n<nav class=\"settings-menu\">\r\n    <ul>\r\n        <li class=\"general\"><a href=\"#general\">General</a></li>\r\n        <li class=\"users\"><a href=\"#user\">User</a></li>\r\n        <li class=\"apps\"><a href=\"#apps\">Apps</a></li>\r\n    </ul>\r\n</nav>";
   });
 
 this["JST"]["settings/user-profile"] = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -50312,41 +50312,41 @@ function program7(depth0,data) {
   return escapeExpression(((stack1 = helpers.asset || (depth0 && depth0.asset)),stack1 ? stack1.call(depth0, "shared/img/user-image.png", options) : helperMissing.call(depth0, "asset", "shared/img/user-image.png", options)));
   }
 
-  buffer += "<header>\n    <button class=\"button-back\">Back</button>\n    <h2 class=\"title\">Your Profile</h2>\n    <section class=\"page-actions\">\n        <button class=\"button-save\">Save</button>\n    </section>\n</header>\n\n<section class=\"content no-padding\">\n\n    <header class=\"user-profile-header\">\n        <img id=\"user-cover\" class=\"cover-image\" src=\"";
+  buffer += "<header>\r\n    <button class=\"button-back\">Back</button>\r\n    <h2 class=\"title\">Your Profile</h2>\r\n    <section class=\"page-actions\">\r\n        <button class=\"button-save\">Save</button>\r\n    </section>\r\n</header>\r\n\r\n<section class=\"content no-padding\">\r\n\r\n    <header class=\"user-profile-header\">\r\n        <img id=\"user-cover\" class=\"cover-image\" src=\"";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.cover), {hash:{},inverse:self.program(3, program3, data),fn:self.program(1, program1, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += "\" title=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "'s Cover Image\"/>\n\n        <a class=\"edit-cover-image js-modal-cover button\" href=\"#\">Change Cover</a>\n    </header>\n\n    <form class=\"user-profile\" novalidate=\"novalidate\">\n\n        <fieldset class=\"user-details-top\">\n\n            <figure class=\"user-image\">\n                <div id=\"user-image\" class=\"img\" style=\"background-image: url(";
+    + "'s Cover Image\"/>\r\n\r\n        <a class=\"edit-cover-image js-modal-cover button\" href=\"#\">Change Cover</a>\r\n    </header>\r\n\r\n    <form class=\"user-profile\" novalidate=\"novalidate\">\r\n\r\n        <fieldset class=\"user-details-top\">\r\n\r\n            <figure class=\"user-image\">\r\n                <div id=\"user-image\" class=\"img\" style=\"background-image: url(";
   stack1 = helpers['if'].call(depth0, (depth0 && depth0.image), {hash:{},inverse:self.program(7, program7, data),fn:self.program(5, program5, data),data:data});
   if(stack1 || stack1 === 0) { buffer += stack1; }
   buffer += ");\" href=\"#\"><span class=\"hidden\">";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "'s Picture</span></div>\n                <a href=\"#\" class=\"edit-user-image js-modal-image\">Edit Picture</a>\n            </figure>\n\n            <div class=\"form-group\">\n                <label for=\"user-name\" class=\"hidden\">Full Name</label>\n                <input type=\"text\" value=\"";
+    + "'s Picture</span></div>\r\n                <a href=\"#\" class=\"edit-user-image js-modal-image\">Edit Picture</a>\r\n            </figure>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-name\" class=\"hidden\">Full Name</label>\r\n                <input type=\"text\" value=\"";
   if (stack1 = helpers.name) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.name); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" id=\"user-name\" placeholder=\"Full Name\" autocorrect=\"off\" />\n                <p>Use your real name so people can recognise you</p>\n            </div>\n\n        </fieldset>\n\n        <fieldset class=\"user-details-bottom\">\n\n            <div class=\"form-group\">\n                <label for\"user-email\">Email</label>\n                <input type=\"email\" value=\"";
+    + "\" id=\"user-name\" placeholder=\"Full Name\" autocorrect=\"off\" />\r\n                <p>Use your real name so people can recognise you</p>\r\n            </div>\r\n\r\n        </fieldset>\r\n\r\n        <fieldset class=\"user-details-bottom\">\r\n\r\n            <div class=\"form-group\">\r\n                <label for\"user-email\">Email</label>\r\n                <input type=\"email\" value=\"";
   if (stack1 = helpers.email) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.email); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" id=\"user-email\" placeholder=\"Email Address\" autocapitalize=\"off\" autocorrect=\"off\" />\n                <p>Used for notifications</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-location\">Location</label>\n                <input type=\"text\" value=\"";
+    + "\" id=\"user-email\" placeholder=\"Email Address\" autocapitalize=\"off\" autocorrect=\"off\" />\r\n                <p>Used for notifications</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-location\">Location</label>\r\n                <input type=\"text\" value=\"";
   if (stack1 = helpers.location) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.location); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" id=\"user-location\" />\n                <p>Where in the world do you live?</p>\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-website\">Website</label>\n                <input type=\"url\" value=\"";
+    + "\" id=\"user-location\" />\r\n                <p>Where in the world do you live?</p>\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-website\">Website</label>\r\n                <input type=\"url\" value=\"";
   if (stack1 = helpers.website) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.website); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "\" id=\"user-website\" autocapitalize=\"off\" autocorrect=\"off\" />\n                <p>Have a website or blog other than this one? Link it!</p>\n            </div>\n\n            <div class=\"form-group bio-container\">\n                <label for=\"user-bio\">Bio</label>\n                <textarea id=\"user-bio\">";
+    + "\" id=\"user-website\" autocapitalize=\"off\" autocorrect=\"off\" />\r\n                <p>Have a website or blog other than this one? Link it!</p>\r\n            </div>\r\n\r\n            <div class=\"form-group bio-container\">\r\n                <label for=\"user-bio\">Bio</label>\r\n                <textarea id=\"user-bio\">";
   if (stack1 = helpers.bio) { stack1 = stack1.call(depth0, {hash:{},data:data}); }
   else { stack1 = (depth0 && depth0.bio); stack1 = typeof stack1 === functionType ? stack1.call(depth0, {hash:{},data:data}) : stack1; }
   buffer += escapeExpression(stack1)
-    + "</textarea>\n                <p>\n                    Write about you, in 200 characters or less.\n                    <span class=\"word-count\">0</span>\n                </p>\n            </div>\n\n            <hr />\n\n        </fieldset>\n\n        <fieldset>\n\n            <div class=\"form-group\">\n                <label for=\"user-password-old\">Old Password</label>\n                <input type=\"password\" id=\"user-password-old\" />\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-password-new\">New Password</label>\n                <input type=\"password\" id=\"user-password-new\" />\n            </div>\n\n            <div class=\"form-group\">\n                <label for=\"user-new-password-verification\">Verify Password</label>\n                <input type=\"password\" id=\"user-new-password-verification\" />\n            </div>\n            <div class=\"form-group\">\n                <button type=\"button\" class=\"button-delete button-change-password\">Change Password</button>\n            </div>\n\n        </fieldset>\n\n    </form>\n</section>\n";
+    + "</textarea>\r\n                <p>\r\n                    Write about you, in 200 characters or less.\r\n                    <span class=\"word-count\">0</span>\r\n                </p>\r\n            </div>\r\n\r\n            <hr />\r\n\r\n        </fieldset>\r\n\r\n        <fieldset>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-password-old\">Old Password</label>\r\n                <input type=\"password\" id=\"user-password-old\" />\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-password-new\">New Password</label>\r\n                <input type=\"password\" id=\"user-password-new\" />\r\n            </div>\r\n\r\n            <div class=\"form-group\">\r\n                <label for=\"user-new-password-verification\">Verify Password</label>\r\n                <input type=\"password\" id=\"user-new-password-verification\" />\r\n            </div>\r\n            <div class=\"form-group\">\r\n                <button type=\"button\" class=\"button-delete button-change-password\">Change Password</button>\r\n            </div>\r\n\r\n        </fieldset>\r\n\r\n    </form>\r\n</section>\r\n";
   return buffer;
   });
 
@@ -50356,7 +50356,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<form id=\"signup\" class=\"signup-form\" method=\"post\" novalidate=\"novalidate\">\n    <div class=\"name-wrap\">\n        <input class=\"name\" type=\"text\" placeholder=\"Full Name\" name=\"name\" autocorrect=\"off\" />\n    </div>\n    <div class=\"email-wrap\">\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\" />\n    </div>\n    <div class=\"password-wrap\">\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\" />\n    </div>\n    <button class=\"button-save\" type=\"submit\">Sign Up</button>\n</form>\n";
+  return "<form id=\"signup\" class=\"signup-form\" method=\"post\" novalidate=\"novalidate\">\r\n    <div class=\"name-wrap\">\r\n        <input class=\"name\" type=\"text\" placeholder=\"Full Name\" name=\"name\" autocorrect=\"off\" />\r\n    </div>\r\n    <div class=\"email-wrap\">\r\n        <input class=\"email\" type=\"email\" placeholder=\"Email Address\" name=\"email\" autocapitalize=\"off\" autocorrect=\"off\" />\r\n    </div>\r\n    <div class=\"password-wrap\">\r\n        <input class=\"password\" type=\"password\" placeholder=\"Password\" name=\"password\" />\r\n    </div>\r\n    <button class=\"button-save\" type=\"submit\">Sign Up</button>\r\n</form>\r\n";
   });
 /*global Ghost, _, Backbone, NProgress */
 
