@@ -9,7 +9,6 @@ config = {
     // ### Development **(default)**
     development: {
         // The url to use when providing links to the site, E.g. in RSS and email.
-		// test of deploy
         url: 'http://tylerochiai.azurewebsites.net',
 
         // Example mail config
